@@ -20,5 +20,12 @@ AGENTS.md
 # Experimental code/artifacts
 dev/
 
+# Datasets (large; downloaded locally, not versioned)
+data/
+
+# GRPO training artifacts
+out/
+*.log
+
 # Results file
 results.tsv
