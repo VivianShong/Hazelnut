@@ -83,6 +83,16 @@ LoRA adapter saved to `out/grpo/` (`adapter_model.safetensors`).
   per-run `metrics.json` hand-off. Edge = GRPO-continue from parent; multi-child = many `parent`
   pointers to one immutable, retained adapter.
 
+## Ledger v2 — science-engine schema (DONE, `LEDGER.md`)
+- `ledger.py` / `ledger.json`: inquiry DAG over a checkpoint substrate. checkpoints (facts) ⊂
+  experiments (claims via **selectors** point/path/curve/contrast, cached `resolved_nodes`) ⊂
+  inquiry DAG (`motivated_by`). Verdict engine reads real metrics → confirmed/refuted/inconclusive
+  /pending + evidence; `power_check` auto-flags underpowered designs (segment-tree-style range
+  queries: argmax checkpoint, plateau onset).
+- Ran e2e: back-filled Exp 1/2/3 from real runs → Exp1 INCONCLUSIVE (auto-detected n=24 underpower),
+  Exp2 CONFIRMED (Δ0.24, plateau@40), Exp3 PENDING; live forward loop proven via `ledger_driver --mock`.
+- Exp 3 nodes ingested as `external` (live old driver owns them); re-run `backfill_ledger.py` to sync.
+
 ## Experiment 1 — KL strength × chain depth (`results/exp1_kl_depth.md`)
 - 11 nodes, two depth-5 chains (kl=0.04 vs 0.01) from base, held-out pass@1 (n=24) per node.
 - **Null result, and we know why:** pass@1 flat at base ±noise (n=24 → σ≈0.10; table spans
