@@ -1,0 +1,552 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "task": "grpo-qwen3.5-2b-code",
+    "base_model": "/opt/Hazelnut/models/qwen3.5-2b-Base",
+    "experiment": "kl-strength x chain-depth: does chained GRPO compound held-out pass@1?",
+    "root_id": "base",
+    "updated_at": "2026-06-23T21:31:00+00:00"
+  },
+  "nodes": {
+    "base": {
+      "id": "base",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 0,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42
+      },
+      "rationale": "depth-0 anchor: base-model held-out pass@1 (both chains start here)",
+      "priority": 1.0,
+      "created_at": "2026-06-23T19:00:00+00:00",
+      "config_hash": "sha1:834f66fe2879",
+      "run": {
+        "started_at": "2026-06-23T18:54:33+00:00",
+        "log_path": "runs/base/train.log",
+        "ended_at": "2026-06-23T18:57:20+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/base",
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4025.666015625,
+        "total_seconds": 163.8862054347992,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/base",
+        "last_breakdown": null,
+        "eval_passrate": 0.5,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "a0": {
+      "id": "a0",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.04
+      },
+      "rationale": "arm a (kl=0.04) depth 1: GRPO from base, +5 steps",
+      "priority": 0.95,
+      "created_at": "2026-06-23T19:00:01+00:00",
+      "config_hash": "sha1:b4638cf42bc2",
+      "run": {
+        "started_at": "2026-06-23T18:57:20+00:00",
+        "log_path": "runs/a0/train.log",
+        "ended_at": "2026-06-23T19:09:38+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a0",
+      "metrics": {
+        "final_reward": 0.4624999761581421,
+        "best_reward": 0.7124999761581421,
+        "mean_reward": 0.6170833110809326,
+        "steps": 5,
+        "peak_vram_mb": 8146.31689453125,
+        "total_seconds": 734.4705443382263,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a0",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_passrate": 0.4583333333333333,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "a1": {
+      "id": "a1",
+      "parent": "a0",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.04
+      },
+      "rationale": "arm a (kl=0.04) depth 2: continue a0, +5 steps",
+      "priority": 0.85,
+      "created_at": "2026-06-23T19:00:02+00:00",
+      "config_hash": "sha1:c8acb2d878cc",
+      "run": {
+        "started_at": "2026-06-23T19:21:39+00:00",
+        "log_path": "runs/a1/train.log",
+        "ended_at": "2026-06-23T19:34:33+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a1",
+      "metrics": {
+        "final_reward": 0.668749988079071,
+        "best_reward": 0.793749988079071,
+        "mean_reward": 0.6962499737739563,
+        "steps": 5,
+        "peak_vram_mb": 8143.41455078125,
+        "total_seconds": 770.9640803337097,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a1",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_passrate": 0.4166666666666667,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "a2": {
+      "id": "a2",
+      "parent": "a1",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.04
+      },
+      "rationale": "arm a (kl=0.04) depth 3: continue a1, +5 steps",
+      "priority": 0.75,
+      "created_at": "2026-06-23T19:00:03+00:00",
+      "config_hash": "sha1:23b17e9544c7",
+      "run": {
+        "started_at": "2026-06-23T19:46:59+00:00",
+        "log_path": "runs/a2/train.log",
+        "ended_at": "2026-06-23T19:58:47+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a2",
+      "metrics": {
+        "final_reward": 0.543749988079071,
+        "best_reward": 0.675000011920929,
+        "mean_reward": 0.6399999737739563,
+        "steps": 5,
+        "peak_vram_mb": 8146.31689453125,
+        "total_seconds": 705.4916563034058,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a2",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_passrate": 0.4583333333333333,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "a3": {
+      "id": "a3",
+      "parent": "a2",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.04
+      },
+      "rationale": "arm a (kl=0.04) depth 4: continue a2, +5 steps",
+      "priority": 0.6499999999999999,
+      "created_at": "2026-06-23T19:00:04+00:00",
+      "config_hash": "sha1:ec4fcbfe46a0",
+      "run": {
+        "started_at": "2026-06-23T20:11:07+00:00",
+        "log_path": "runs/a3/train.log",
+        "ended_at": "2026-06-23T20:22:47+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a3",
+      "metrics": {
+        "final_reward": 0.7124999761581421,
+        "best_reward": 0.8374999761581421,
+        "mean_reward": 0.7062499761581421,
+        "steps": 5,
+        "peak_vram_mb": 8143.22314453125,
+        "total_seconds": 696.7136249542236,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a3",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_passrate": 0.5,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "a4": {
+      "id": "a4",
+      "parent": "a3",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.04
+      },
+      "rationale": "arm a (kl=0.04) depth 5: continue a3, +5 steps",
+      "priority": 0.5499999999999999,
+      "created_at": "2026-06-23T19:00:05+00:00",
+      "config_hash": "sha1:369b95bf6fd4",
+      "run": {
+        "started_at": "2026-06-23T21:19:02+00:00",
+        "log_path": "runs/a4/train.log",
+        "ended_at": "2026-06-23T21:31:00+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a4",
+      "metrics": {
+        "final_reward": 0.3812499940395355,
+        "best_reward": 0.675000011920929,
+        "mean_reward": 0.5899999797344208,
+        "steps": 5,
+        "peak_vram_mb": 8147.36279296875,
+        "total_seconds": 714.9915606975555,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/a4",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_passrate": 0.4166666666666667,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "b0": {
+      "id": "b0",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.01
+      },
+      "rationale": "arm b (kl=0.01) depth 1: GRPO from base, +5 steps",
+      "priority": 0.95,
+      "created_at": "2026-06-23T19:00:06+00:00",
+      "config_hash": "sha1:623863fbdd04",
+      "run": {
+        "started_at": "2026-06-23T19:09:38+00:00",
+        "log_path": "runs/b0/train.log",
+        "ended_at": "2026-06-23T19:21:39+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b0",
+      "metrics": {
+        "final_reward": 0.75,
+        "best_reward": 0.7562499642372131,
+        "mean_reward": 0.6887499809265136,
+        "steps": 5,
+        "peak_vram_mb": 8140.37646484375,
+        "total_seconds": 717.4694893360138,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b0",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_passrate": 0.4166666666666667,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "b1": {
+      "id": "b1",
+      "parent": "b0",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.01
+      },
+      "rationale": "arm b (kl=0.01) depth 2: continue b0, +5 steps",
+      "priority": 0.85,
+      "created_at": "2026-06-23T19:00:07+00:00",
+      "config_hash": "sha1:c1ffefdca5c8",
+      "run": {
+        "started_at": "2026-06-23T19:34:33+00:00",
+        "log_path": "runs/b1/train.log",
+        "ended_at": "2026-06-23T19:46:59+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b1",
+      "metrics": {
+        "final_reward": 0.7124999761581421,
+        "best_reward": 0.7562499642372131,
+        "mean_reward": 0.6649999737739563,
+        "steps": 5,
+        "peak_vram_mb": 8145.31396484375,
+        "total_seconds": 742.5631663799286,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b1",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_passrate": 0.5,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "b2": {
+      "id": "b2",
+      "parent": "b1",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.01
+      },
+      "rationale": "arm b (kl=0.01) depth 3: continue b1, +5 steps",
+      "priority": 0.75,
+      "created_at": "2026-06-23T19:00:08+00:00",
+      "config_hash": "sha1:d1928ce8a7bc",
+      "run": {
+        "started_at": "2026-06-23T19:58:47+00:00",
+        "log_path": "runs/b2/train.log",
+        "ended_at": "2026-06-23T20:11:07+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b2",
+      "metrics": {
+        "final_reward": 0.668749988079071,
+        "best_reward": 0.8374999761581421,
+        "mean_reward": 0.6649999618530273,
+        "steps": 5,
+        "peak_vram_mb": 8145.51708984375,
+        "total_seconds": 736.4894931316376,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b2",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_passrate": 0.5,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "b3": {
+      "id": "b3",
+      "parent": "b2",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.01
+      },
+      "rationale": "arm b (kl=0.01) depth 4: continue b2, +5 steps",
+      "priority": 0.6499999999999999,
+      "created_at": "2026-06-23T19:00:09+00:00",
+      "config_hash": "sha1:7b5ca74c94c8",
+      "run": {
+        "started_at": "2026-06-23T20:22:47+00:00",
+        "log_path": "runs/b3/train.log",
+        "ended_at": "2026-06-23T20:35:35+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b3",
+      "metrics": {
+        "final_reward": 0.5874999761581421,
+        "best_reward": 0.7020833492279053,
+        "mean_reward": 0.66291663646698,
+        "steps": 5,
+        "peak_vram_mb": 8147.14111328125,
+        "total_seconds": 765.0848939418793,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b3",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_passrate": 0.3333333333333333,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    },
+    "b4": {
+      "id": "b4",
+      "parent": "b3",
+      "status": "done",
+      "config": {
+        "source": "mbpp",
+        "num_prompts": 2,
+        "group_size": 4,
+        "max_new_tokens": 384,
+        "train_steps": 5,
+        "time_budget": 800,
+        "eval_n": 24,
+        "eval_batch": 8,
+        "seed": 42,
+        "kl_coeff": 0.01
+      },
+      "rationale": "arm b (kl=0.01) depth 5: continue b3, +5 steps",
+      "priority": 0.5499999999999999,
+      "created_at": "2026-06-23T19:00:10+00:00",
+      "config_hash": "sha1:d1c27d5776be",
+      "run": {
+        "started_at": "2026-06-23T20:45:28+00:00",
+        "log_path": "runs/b4/train.log",
+        "ended_at": "2026-06-23T21:00:39+00:00",
+        "exit": "ok"
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b4",
+      "metrics": {
+        "final_reward": 0.4624999761581421,
+        "best_reward": 0.7562500238418579,
+        "mean_reward": 0.6224999785423279,
+        "steps": 5,
+        "peak_vram_mb": 8146.31689453125,
+        "total_seconds": 908.162490606308,
+        "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/b4",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_passrate": 0.4583333333333333,
+        "eval_compile": 0.9583333333333334,
+        "eval_n": 24
+      }
+    }
+  }
+}

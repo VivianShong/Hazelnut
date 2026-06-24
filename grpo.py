@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import json
 import math
 import os
 import time
@@ -52,6 +53,7 @@ class GRPOConfig:
     # --- model / io ---
     model_path: str = DEFAULT_MODEL_PATH
     output_dir: str = "out/grpo"
+    init_from: str = ""            # parent LoRA adapter dir to resume from; "" = fresh from base
     seed: int = 42
     # --- LoRA (what we actually train) ---
     lora_r: int = 16
@@ -69,9 +71,14 @@ class GRPOConfig:
     top_p: float = 1.0
     max_new_tokens: int = 512       # solutions need room; <256 truncates -> won't compile
     max_prompt_len: int = 1024      # APPS statements are long (700+ tok); don't truncate them away
+    data_limit: int = 256           # cap on training problems materialised (raise to use all of MBPP)
     source: str = "mbpp"            # training set: mbpp|apps|dummy (APPS is the hard benchmark)
     difficulty: str = "introductory"  # APPS only: introductory|interview|competition|"" (all)
     max_test_cases: int = 8        # APPS: cap test cases graded per completion
+    # --- held-out eval (clean comparable score across tree nodes) ---
+    eval_n: int = 0                # held-out problems for greedy pass@1; 0 = skip
+    eval_every: int = 0            # also eval mid-training every N steps (pass@1 curve); 0 = only at end
+    eval_batch: int = 8            # generation batch size during eval
     # --- budget (stop at whichever comes first) ---
     train_steps: int = 20
     time_budget: float = 300.0     # seconds (matches program.md)
@@ -88,7 +95,7 @@ def _set_seed(seed: int):
 
 def _load_policy(cfg: GRPOConfig):
     from transformers import AutoModelForCausalLM, AutoTokenizer
-    from peft import LoraConfig, get_peft_model
+    from peft import LoraConfig, PeftModel, get_peft_model
 
     tok = AutoTokenizer.from_pretrained(cfg.model_path)
     if tok.pad_token_id is None:
@@ -100,11 +107,18 @@ def _load_policy(cfg: GRPOConfig):
     )
     model.config.use_cache = True
 
-    lora = LoraConfig(
-        r=cfg.lora_r, lora_alpha=cfg.lora_alpha, lora_dropout=cfg.lora_dropout,
-        target_modules="all-linear", task_type="CAUSAL_LM",
-    )
-    model = get_peft_model(model, lora)
+    if cfg.init_from:
+        # Tree branch: continue GRPO from a parent node's LoRA adapter. The base
+        # stays frozen; the reference policy is still base-with-adapter-disabled
+        # (KL is measured vs base, not vs the parent — see GRPO.md design notes).
+        print(f"Resuming LoRA adapter from {cfg.init_from}")
+        model = PeftModel.from_pretrained(model, cfg.init_from, is_trainable=True)
+    else:
+        lora = LoraConfig(
+            r=cfg.lora_r, lora_alpha=cfg.lora_alpha, lora_dropout=cfg.lora_dropout,
+            target_modules="all-linear", task_type="CAUSAL_LM",
+        )
+        model = get_peft_model(model, lora)
     # Needed for gradient checkpointing to propagate grads to LoRA params while
     # the base model stays frozen.
     model.enable_input_require_grads()
@@ -162,6 +176,43 @@ def _seq_logprobs(model, sequences, prompt_len, gen_mask, micro_batch):
     return torch.cat(all_lp, dim=0) * gen_mask
 
 
+@torch.no_grad()
+def evaluate(model, tok, cfg: GRPOConfig) -> dict:
+    """Greedy pass@1 on a FIXED held-out MBPP slice (disjoint from training).
+
+    Deterministic (do_sample=False, fixed problem order) so the score is
+    comparable across tree nodes/checkpoints — this is the metric the frontier
+    should rank on, unlike the noisy per-step training reward. Evaluates the
+    *current* policy (LoRA adapter active).
+    """
+    probs = load_dataset("eval", source=cfg.source, limit=cfg.eval_n,
+                         difficulty=(cfg.difficulty or None))
+    if not probs:
+        return {}
+    model.eval()
+    model.config.use_cache = True
+    model.gradient_checkpointing_disable()
+    chats = [[{"role": "user", "content": p["prompt"]}] for p in probs]
+    enc = tok.apply_chat_template(
+        chats, add_generation_prompt=True, return_tensors="pt", return_dict=True,
+        padding=True, truncation=True, max_length=cfg.max_prompt_len,
+    ).to("cuda")
+    plen = enc["input_ids"].shape[1]
+    texts: list[str] = []
+    for i in range(0, len(probs), cfg.eval_batch):
+        sub = {k: v[i:i + cfg.eval_batch] for k, v in enc.items()}
+        out = model.generate(**sub, do_sample=False, max_new_tokens=cfg.max_new_tokens,
+                             pad_token_id=tok.pad_token_id)
+        texts.extend(tok.batch_decode(out[:, plen:], skip_special_tokens=True))
+    npass = ncomp = 0
+    for text, prob in zip(texts, probs):
+        bd = score_completion(text, prob, max_cases=cfg.max_test_cases)
+        npass += 1 if bd.correctness > 0 else 0
+        ncomp += 1 if bd.compiles else 0
+    n = len(probs)
+    return {"eval_passrate": npass / n, "eval_compile": ncomp / n, "eval_n": n}
+
+
 def train(**overrides) -> dict:
     """Run GRPO with the given hyperparameter overrides. Returns a metrics dict."""
     cfg = GRPOConfig(**overrides)
@@ -174,13 +225,15 @@ def train(**overrides) -> dict:
         [p for p in model.parameters() if p.requires_grad], lr=cfg.lr
     )
 
-    train_problems = load_dataset("train", source=cfg.source, difficulty=(cfg.difficulty or None))
+    train_problems = load_dataset("train", source=cfg.source, limit=cfg.data_limit,
+                                  difficulty=(cfg.difficulty or None))
     print(f"Loaded {len(train_problems)} training problems (source={cfg.source})")
 
     eps = 1e-4
     rng = torch.Generator().manual_seed(cfg.seed)
     step = 0
     reward_hist: list[float] = []
+    eval_curve: list[dict] = []
     last_breakdown: dict | None = None
 
     while step < cfg.train_steps and (time.time() - t_start) < cfg.time_budget:
@@ -256,6 +309,28 @@ def train(**overrides) -> dict:
         )
         step += 1
 
+        # --- mid-training held-out eval + crash-safe checkpoint snapshot ---
+        if cfg.eval_n and cfg.eval_every and step % cfg.eval_every == 0:
+            em = evaluate(model, tok, cfg)
+            em["step"] = step
+            eval_curve.append(em)
+            print(f"[eval@{step}] pass@1={em.get('eval_passrate'):.3f} "
+                  f"compile={em.get('eval_compile'):.3f}", flush=True)
+            out = Path(cfg.output_dir)
+            out.mkdir(parents=True, exist_ok=True)
+            with open(out / "eval_curve.jsonl", "a") as f:
+                f.write(json.dumps(em) + "\n")
+            model.save_pretrained(str(out))  # latest snapshot survives a later crash
+            model.train()                    # restore train mode for the next step
+
+    # --- held-out eval (clean comparable score across nodes) ---
+    eval_metrics = {}
+    if cfg.eval_n:
+        eval_metrics = evaluate(model, tok, cfg)
+        print(f"eval (held-out, greedy, n={eval_metrics.get('eval_n')}): "
+              f"pass@1={eval_metrics.get('eval_passrate'):.3f} "
+              f"compile={eval_metrics.get('eval_compile'):.3f}", flush=True)
+
     # --- save adapter ---
     out = Path(cfg.output_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -274,7 +349,12 @@ def train(**overrides) -> dict:
         "total_seconds": time.time() - t_start,
         "checkpoint": str(out),
         "last_breakdown": last_breakdown,
+        "eval_curve": eval_curve,
+        **eval_metrics,
     }
+
+    # Machine-readable hand-off for the experiment driver (robust vs stdout parsing).
+    (out / "metrics.json").write_text(json.dumps(metrics, indent=2))
 
     print("---")
     print(f"final_reward:     {metrics['final_reward']:.6f}")

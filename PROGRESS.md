@@ -3,10 +3,22 @@
 _Last updated: 2026-06-23. Branch `grpo` (worktree `/opt/Hazelnut/worktrees/grpo`, off master `03cd578`)._
 
 ## Goal
-Autonomous GRPO post-training of **Qwen3.5-2B-Base** to write better Python code, on
-top of Karpathy's autoresearch framework. P0: a research agent picks hyperparameter
-configs, a deterministic driver runs `train()`, results form a keep/branch/rollback
-tree. The agent only emits configs — it never edits training code.
+**An autonomous research agent that does RL *science*** on a GRPO substrate (LoRA
+post-training of **Qwen3.5-2B-Base** for Python code). The agent proposes **experiments**
+(a hypothesis + controlled arms + a pre-registered metric & decision rule + a predicted
+outcome), a deterministic driver runs the nodes, and the agent writes **verdicts**
+(confirmed / refuted / inconclusive, with evidence) and follow-ups. The tree is an
+**experiment ledger**, not a hill-climb to a champion checkpoint.
+
+**Success metric = good science, not best pass@1:** correct dose/metric/regime conclusions,
+adequately *powered* experiments, first-class negative results, and conclusions that survive
+replication — per unit of compute. MBPP/APPS pass@1 are *substrates* to run experiments on,
+not the objective. (Pivot 2026-06-24, after Exp 1-3 showed MBPP pass@1 saturates in ~40 steps
+⇒ too shallow to justify a search tree as a checkpoint optimizer; but Exp 1→2→3 *was* exactly
+this science loop run by hand — hypothesis → underpowered null → diagnose dose → confirm → re-test.)
+
+_Earlier framing (kept as the substrate, demoted from headline): agent emits hyperparameter
+configs, driver runs `train()`, keep/branch/rollback tree. Still true at the node level._
 
 ## Environment (verified)
 - **GPU: Tesla T4, 16 GB, sm_75 (Turing)** — *not* an H100. No bf16 tensor cores; no flash-attn2/3.
@@ -61,10 +73,37 @@ LoRA adapter saved to `out/grpo/` (`adapter_model.safetensors`).
 - **Learning confirmed**: KL grows monotonically `0.0002 → 0.0010` (policy moving off reference); **compile rate climbs 0.83 → 1.00**.
 - **Per-step reward is noisy** (0.43–0.96) — only 3 problems sampled per step, so it reflects *which* problems were drawn, not model quality. Need a **fixed held-out eval set** measured every N steps (and/or larger batches) for a clean curve. (`mbpp_train.log`)
 
+## Experiment driver + tree (DONE — P0 core landed)
+- `driver.py` — reads `tree.json`, claims `queued` nodes (fcntl lock + atomic write), runs
+  `grpo.py` as a subprocess with the node's config, resumes from the parent's LoRA adapter
+  via `--init-from`, records `done/failed` + metrics + checkpoint. Dedupe by config_hash;
+  crash/timeout/no-metrics isolation per node. Agent owns config; driver owns results.
+- `grpo.py` additions: `init_from` (resume parent adapter → real tree edges; KL reference
+  stays = base), `evaluate()` (fixed held-out greedy pass@1 → comparable score across nodes),
+  per-run `metrics.json` hand-off. Edge = GRPO-continue from parent; multi-child = many `parent`
+  pointers to one immutable, retained adapter.
+
+## Experiment 1 — KL strength × chain depth (`results/exp1_kl_depth.md`)
+- 11 nodes, two depth-5 chains (kl=0.04 vs 0.01) from base, held-out pass@1 (n=24) per node.
+- **Null result, and we know why:** pass@1 flat at base ±noise (n=24 → σ≈0.10; table spans
+  0.33–0.50). KL-to-base only reached **~5e-4** after 25 cumulative steps ⇒ the policy barely
+  moved ⇒ nothing to compound, and the KL penalty was never active (kl contrast inconclusive).
+  compile saturated at 23/24 everywhere. **Per-node dose is far too small.**
+- Infra validated end-to-end autonomously (resume chains, one transient OOM isolated + recovered).
+
+## Experiment 2 — extended training on all MBPP (`results/exp2_extended_training.md`)
+- One continuous 160-step run, **lr=5e-5** (5× exp1), all 374 MBPP train, pass@1 curve (n=50) every 20 steps.
+- **YES — extended training moves pass@1: 0.42 → ~0.62 plateau (+0.20, ~3σ).** Exp 1's null was
+  under-dosing: lr 5× pushed KL from ~5e-4 into the active **0.04–0.07** regime, and pass@1 moved.
+- Gain is **front-loaded (most by step ~40)** then plateaus within noise; **compile saturates →1.00**;
+  KL bounded/oscillating, no divergence. **Working recipe: lr≈5e-5, ~40–60 steps/node, eval n≥50.**
+- Caveat: best checkpoint is mid-run, not final → tree should keep **best-eval**, not last.
+
 ## Next steps (priority order)
-1. **Held-out eval** (`evaluate(model, n_problems)`) measured every N steps → clean pass@1 curve (replaces noisy per-step training reward as the tracked metric). Likely also bump `num_prompts` for lower-variance steps.
-2. **Experiment driver + tree** (P0 core): wrap `train()`, parse the metrics block, persist nodes to `tree.json` (config + reward + checkpoint + status), keep/branch/rollback, crash/timeout handling, dedupe by config hash.
-3. **Repoint agent scaffolding** (`program.md`, `.github/copilot-instructions.md`, `/self-improve` skill) from `train.py`/`val_bpb` → `grpo.py`/reward. (These still describe the pretraining task — stale for this project.)
+1. **Re-run Exp 1 (KL×depth) at the working dose** (lr=5e-5, ~40 steps/node, eval n≥50): now that a
+   single node reaches the plateau, does chaining/depth or KL strength actually matter? Keep best-eval
+   checkpoint per node (save per-eval snapshots to distinct dirs).
+2. **Repoint agent scaffolding** (`program.md`, `.github/copilot-instructions.md`, `/self-improve` skill) from `train.py`/`val_bpb` → `grpo.py`/reward. (These still describe the pretraining task — stale for this project.)
 4. **APPS-after-MBPP transfer eval** — does MBPP training move APPS pass@1 off 0? (headline result.)
 5. **Live dashboard** — reward curve + version tree.
 
