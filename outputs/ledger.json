@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "headline": "inquiry-DAG over a checkpoint substrate",
+    "goal": "improve Qwen3.5-2B-base's pass rate on MBPP dataset",
+    "updated_at": "2026-06-25T08:34:05+00:00"
+  },
+  "checkpoints": {
+    "base50": {
+      "id": "base50",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 50,
+        "max_new_tokens": 640,
+        "eval_batch": 8
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4111.9677734375,
+        "total_seconds": 701.094217300415,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.46,
+        "eval_compile": 0.86,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint"
+    },
+    "cot30": {
+      "id": "cot30",
+      "parent": "base50",
+      "status": "running",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {},
+      "checkpoint": null
+    }
+  },
+  "experiments": {
+    "e1": {
+      "id": "e1",
+      "question": "Does GRPO training with chain-of-thought prompts raise held-out MBPP pass@1 above the untrained base, with the CoT prompt held constant at eval?",
+      "hypothesis": "Reinforcing CoT-prefixed generations that yield correct code (GRPO_COT=1) teaches Qwen3.5-2B-base to reason-then-code, improving greedy pass@1 over the base anchor evaluated under the same CoT prompt.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "cot30"
+      },
+      "anchor": "base50",
+      "resolved_nodes": [
+        "base50",
+        "cot30"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": null,
+      "verdict": null,
+      "created_at": "2026-06-25T08:22:08+00:00"
+    }
+  }
+}

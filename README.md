@@ -1,80 +1,96 @@
- ---
-  Project: Autonomous GRPO Post-Training System
-  
-  Build a tree-based autonomous system that uses an LLM research agent to navigate GRPO hyperparameter space, post-training Qwen3.5-2B-base to write better
-  Python code. Built on top of Karpathy's autoresearch framework.
+# Hazelnut — an autonomous RL-science agent
 
-  P0 (Hackathon scope): Tree-based experiment management. Each node records a hyperparameter config and benchmark score. A research agent decides how the
-  tree grows: branch (new config from parent checkpoint, optimizer reset), continue (same config, more steps from parent checkpoint, optimizer carried), or
-  stop (prune low-potential nodes). The agent only emits config dicts — it never touches training code. A deterministic experiment driver receives configs
-  and runs training as a subprocess.
+An LLM research agent that does **RL science** on a GRPO substrate. It post-trains
+**Qwen3.5-2B-Base** to write better Python (MBPP), but the headline is the *scientific loop*,
+not a single best checkpoint: the agent forms **hypotheses**, pre-registers **experiments**
+(with a power check), runs them on a deterministic GRPO + reward substrate, and writes
+**verdicts** that spawn the next hypothesis. Built on Karpathy's autoresearch framework.
 
-  P1 (Out of scope): Let the research agent propose algorithmic changes (code as config). Requires sandboxed code execution and validation.
+**Success = good science**, not best pass@1: correct, *adequately-powered* conclusions;
+first-class negative results; verdicts that survive replication — per unit of compute.
+MBPP pass@1 is the *substrate*, not the objective.
 
-  ---
-  Architecture: 2-Model System
+> Status & findings live in `PROGRESS.md`. Exp 1–3 already ran this loop by hand:
+> hypothesis → underpowered null → diagnose dose → confirm → re-test.
 
-  Research Agent (large hosted model)
-  - Understands the user's goal, forms hypotheses, chooses hyperparameters
-  - Input: user goal, full research tree (all nodes with configs + results)
-  - Output: one structured action — branch, continue, or stop — with a config dict
-  - Tools: web search, bash (for hardware detection)
-  - Does NOT edit train.py; calls python train.py --lr 1e-5 --kl-coeff 0.04 ... via subprocess
+## Two-model system
+- **Research agent** (large hosted model, runs as a Claude Code skill in `.github/skills/`):
+  forms hypotheses, designs experiments (config dicts + arms), reads results, writes verdicts.
+  **Never edits training code.** Tools: bash (hardware probe), the ledger.
+- **Trainee** (Qwen3.5-2B-Base, local GPU): post-trained with GRPO/LoRA; emits code scored by a
+  **deterministic** reward harness (not the LLM).
 
-  Trainee (Qwen3.5-2B-base, local GPU)
-  - Post-trained with GRPO on Python coding tasks
-  - Input: coding prompts; Output: generated code
-  - Scored by a deterministic reward harness (not the LLM)
+## The ledger — `outputs/ledger.json` (what the agent reads/writes)
+`Goal → Hypotheses ⇄ Experiments`, linked both ways (an experiment's result feeds back into
+*multiple* hypotheses).
 
-  ---
-  Workflow
+```jsonc
+{
+  "goal": "Improve Qwen3.5-2B-Base pass@1 on MBPP",
+  "hypotheses": [
+    { "h_id": 3, "idea": "Once KL is active, its strength (0.04 vs 0.01) doesn't change the plateau",
+      "status": "refuting", "derived_from": 2, "next_h": 4,
+      "ref_e_ids": [3], "feedback": "e3 (partial): kl0.04 ≈0.56–0.62 vs kl0.01 ≈0.44" }
+  ],
+  "experiments": [
+    { "e_id": 3, "ref_h_ids": [3, 4],
+      "experiment_setting": "KL contrast 0.04 vs 0.01, depth-4 chains @ lr5e-5, 40 steps/node, eval n=50",
+      "tree_ref": { "run": "run-001", "nodes": ["c0","c1","c2","c3","d0","d1","d2","d3"] },
+      "status": "incomplete",
+      "result": { "verdict": "pending", "partial": "kl0.04 > kl0.01 at depth≤2" } }
+  ]
+}
+```
 
-  1. Init: Research agent reads hardware constraints (nvidia-smi, VRAM), auto-fits batch size / sequence length. Establishes baseline by running GRPO with
-  default config from Qwen3.5-2B-base (root node).
-  2. Hypothesize: Agent proposes a hypothesis (e.g. "lower KL coefficient will allow more exploration") and encodes it as a config dict. One change at a time
-  — controlled ablation.
-  3. Run: Experiment driver calls python train.py --checkpoint <parent> --output-dir <node_dir> .... Training loads the parent node's checkpoint (or
-  Qwen3.5-2B-base for the root), runs GRPO: sample completions, execute in Python sandbox, score, compute within-group advantages, update policy. Saves
-  checkpoint + prints structured metrics.
-  4. Evaluate: Deterministic reward harness scores on held-out eval set. Component scores logged individually:
-    - Compile errors → py_compile / ast.parse
-    - Style → ruff / flake8 warning count
-    - Security → bandit findings
-    - Correctness → unit test pass rate
-    - Combined into scalar reward for GRPO, but components logged separately for agent reasoning.
-  5. Decide: Agent reads results, checks hypothesis. Branch from promising nodes (new config, loads parent checkpoint, resets optimizer), continue nodes
-  still improving (same config, loads parent checkpoint + optimizer state), stop dead ends. Deduplicates configs by content hash. Maintains a frontier of
-  best-scoring nodes.
-  6. Loop until benchmark score plateaus or budget exhausted.
+## Three layers (why / what / receipts)
+- **`outputs/ledger.json`** — *why*: hypotheses + experiments. Global, committed.
+- **`outputs/runs/<run>/tree.json`** — *what*: checkpoint nodes (configs, status, metrics).
+  **Per-run** (each driver invocation owns its own → no cross-driver collisions). Committed.
+- **`outputs/runs/<run>/<node>/logs/`** — *receipts*: `train.log`, `metrics.json`,
+  `eval_curve.jsonl`, `metrics_steps.jsonl`. Small text, committed.
+- **`outputs/runs/<run>/<node>/model_checkpoint/`** — LoRA adapters (~67 MB). **gitignored**.
 
-  ---
-  Key Design Decisions
-  - Reference policy: always frozen Qwen3.5-2B-base (never updated)
-  - Every node trains from its parent's checkpoint (root node starts from Qwen3.5-2B-base)
-  - Continue carries optimizer state; branch resets it
-  - Agent never produces code, only config dicts
-  - Single GPU, one experiment at a time
-  - Trained models exported only from frontier/leaf nodes
+The agent reads the structured layers (ledger + tree) by default and cracks open raw `logs/`
+only for forensics.
 
-  ---
-  Components
+## Experiment model: branch / continue / stop
+Each node trains from its **parent's checkpoint** (root = base model).
+- **continue** — same config, more steps, **carries optimizer state**.
+- **branch** — new config from the parent checkpoint, **resets optimizer**.
+- **stop** — prune a dead end.
 
+Reference policy = **frozen base** (KL anchor), never updated. Configs deduped by content hash.
+Single GPU, one experiment at a time.
 
-| File | Role |
-| --- | --- |
-| `train.py` | GRPO implementation. CLI API — all config via flags. Loads parent checkpoint, runs training, saves checkpoint, prints metrics. |
-| `experiment_driver.py` | Translates agent actions $\rightarrow$ subprocess calls. Parses metrics. Updates `tree.json`. Handles crashes/timeouts. |
-| `research_agent.py` | LLM decision loop. Reads tree, emits one action per cycle. |
-| `tree.json` | Persistent state. All nodes with config, result, checkpoint path, status. |
-| `reward_harness.py` | Deterministic scoring: compile + style + security + correctness $\rightarrow$ scalar + components. |
-| `analysis.ipynb` | Post-hoc dashboard: progress curves, tree visualization, component breakdowns. |
-  ---
-  Plan
+## Reward (deterministic)
+`compile` (ast) + `correctness` (sandboxed tests) + `style` (ruff) + `security` (bandit)
+→ scalar reward + components logged separately for agent reasoning. (Note: `compile` saturates
+early; `pass@1`/`correctness` is the live signal — see `PROGRESS.md`.)
 
-  1. GRPO training script (train.py) — CLI API, loads parent checkpoint (or Qwen3.5-2B-base for root), GRPO loop with Python sandbox execution, checkpoint
-  save, structured metrics output
-  2. Reward harness — py_compile + ruff + bandit + pytest, component + scalar scoring
-  3. Experiment driver — subprocess orchestration, tree persistence, crash handling
-  4. Research agent — LLM loop with hardware init, hypothesis formation, tree-based decision making, config dedup
-  5. Export + serve — save frontier model, serve via vLLM/Ollama
-  6. Dashboard — live progress curves + tree visualization
+## Repo structure
+```text
+.
+├── main.py                 # entrypoint: runs the research loop
+├── grpo.py                 # GRPO/LoRA training engine (CLI; agent never edits)
+├── rewards.py              # deterministic reward harness
+├── data.py                 # MBPP / APPS loaders
+├── driver.py               # executes a run's tree.json nodes (subprocess → grpo.py)
+├── ledger.py               # ledger lib: hypotheses/experiments + verdict/power engine
+├── dashboard.py            # inquiry DAG + pass@1 curves (GUI)
+├── .github/skills/repur/   # the research agent, as a Claude Code skill
+│   ├── skill.md
+│   └── tools/
+├── relics/                 # Karpathy's original autoresearch (out of scope, untouched)
+├── outputs/
+│   ├── ledger.json         # global research log              (committed)
+│   └── runs/
+│       └── run-001/
+│           ├── tree.json   # this session's checkpoint nodes  (committed)
+│           └── node-a0/
+│               ├── model_checkpoint/   # LoRA adapter          (gitignored)
+│               └── logs/               # train.log, metrics.json, *.jsonl (committed)
+└── README.md
+```
+Modules sit flat at root because `grpo.py` imports `rewards.py`/`data.py` (welded), and
+`ledger.py` is shared infra (`driver.py` writes it, `dashboard.py` reads it) — so it can't live
+inside the agent skill.

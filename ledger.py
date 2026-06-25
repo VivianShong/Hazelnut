@@ -33,7 +33,11 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-LEDGER = Path(__file__).resolve().parent / "ledger.json"
+LEDGER = Path(__file__).resolve().parent / "outputs" / "ledger.json"
+
+# The standing research goal (top-level, mirrors the README Ledger.json example).
+# Every experiment in the inquiry DAG is in service of this objective.
+DEFAULT_GOAL = "improve Qwen3.5-2B-base's pass rate on MBPP dataset"
 
 
 def _now() -> str:
@@ -55,12 +59,22 @@ class Ledger:
             d = {"meta": {"schema_version": 2, "headline": "inquiry-DAG over a checkpoint substrate"},
                  "checkpoints": {}, "experiments": {}}
         self.meta = d["meta"]
+        self.meta.setdefault("goal", DEFAULT_GOAL)  # standing objective (README Goal field)
         self.checkpoints = d["checkpoints"]
         self.experiments = d["experiments"]
+
+    # ---------------- goal (top-level objective) ----------------
+    @property
+    def goal(self) -> str:
+        return self.meta.get("goal", DEFAULT_GOAL)
+
+    def set_goal(self, goal: str) -> None:
+        self.meta["goal"] = goal
 
     # ---------------- persistence ----------------
     def save(self) -> None:
         self.meta["updated_at"] = _now()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         tmp = self.path.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(
             {"meta": self.meta, "checkpoints": self.checkpoints, "experiments": self.experiments},
@@ -243,10 +257,149 @@ class Ledger:
             walk(r["id"], 0)
         return "\n".join(lines)
 
+    def frontier(self, metric: str = "eval_passrate", top: int = 5) -> list[dict]:
+        """Best-scoring *done* checkpoints — the decision support for branch/continue."""
+        scored = [
+            {"id": c["id"], "parent": c.get("parent"), metric: c["metrics"].get(metric),
+             "config": c.get("config", {})}
+            for c in self.checkpoints.values()
+            if c.get("status") == "done" and c.get("metrics", {}).get(metric) is not None
+        ]
+        scored.sort(key=lambda r: r[metric], reverse=True)
+        return scored[:top]
 
-if __name__ == "__main__":
-    import sys
+    def summary(self) -> dict:
+        """Compact, model-readable snapshot: goal, checkpoint states, frontier, verdicts."""
+        states: dict[str, int] = {}
+        for c in self.checkpoints.values():
+            states[c["status"]] = states.get(c["status"], 0) + 1
+        return {
+            "goal": self.goal,
+            "checkpoints_total": len(self.checkpoints),
+            "checkpoint_states": states,
+            "frontier": self.frontier(),
+            "experiments": {
+                eid: {"question": e["question"], "predicted": e["predicted"],
+                      "verdict": (e.get("verdict") or {}).get("result", "unrun"),
+                      "finding": (e.get("verdict") or {}).get("finding"),
+                      "motivated_by": e.get("motivated_by")}
+                for eid, e in self.experiments.items()
+            },
+        }
+
+
+# ---------------- CLI: the read/write entrypoint the research agent uses ----------------
+# The agent never hand-edits ledger.json. It *reads* via `read`/`show`/`summary`/`frontier`
+# and *writes* via `goal --set`, `add-checkpoint`, `register`, and `evaluate` — every write
+# goes through the atomic Ledger.save(). Configs/selectors/metrics are passed as JSON so the
+# agent can emit arbitrary config dicts (README: "the agent only emits config dicts").
+
+def _main() -> None:
+    import argparse
+
+    ap = argparse.ArgumentParser(description="Experiment ledger — read/write CLI for the research agent.")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    sub.add_parser("show", help="inquiry DAG + verdicts (human view)")
+
+    p_read = sub.add_parser("read", help="dump ledger JSON (for the model to read)")
+    p_read.add_argument("--section", choices=["all", "meta", "checkpoints", "experiments", "summary"],
+                        default="summary")
+    p_read.add_argument("--id", help="restrict to one checkpoint/experiment id")
+
+    p_goal = sub.add_parser("goal", help="print, or with --set, update the research goal")
+    p_goal.add_argument("--set", dest="set_to", help="new goal text")
+
+    p_front = sub.add_parser("frontier", help="best-scoring done checkpoints")
+    p_front.add_argument("--metric", default="eval_passrate")
+    p_front.add_argument("--top", type=int, default=5)
+
+    p_add = sub.add_parser("add-checkpoint", help="append a checkpoint (default queued) for the driver to run")
+    p_add.add_argument("--id", required=True)
+    p_add.add_argument("--parent", default=None)
+    p_add.add_argument("--config", default="{}", help="JSON hyperparameter dict")
+    p_add.add_argument("--status", default="queued")
+    p_add.add_argument("--metrics", default="{}", help="JSON metrics dict")
+    p_add.add_argument("--checkpoint", default=None)
+
+    p_reg = sub.add_parser("register", help="pre-register an experiment (claim over a node-set)")
+    p_reg.add_argument("--id", required=True)
+    p_reg.add_argument("--question", required=True)
+    p_reg.add_argument("--hypothesis", required=True)
+    p_reg.add_argument("--predicted", required=True,
+                       help="improved|regressed|flat|arm_effect|no_arm_effect")
+    p_reg.add_argument("--selector", required=True, help="JSON selector")
+    p_reg.add_argument("--metric", required=True, help='JSON, e.g. {"name":"eval_passrate","n":50}')
+    p_reg.add_argument("--decision-rule", required=True,
+                       help='JSON, e.g. {"type":"trend_vs_anchor","k_sigma":2}')
+    p_reg.add_argument("--anchor", default=None)
+    p_reg.add_argument("--motivated-by", default=None)
+
+    p_eval = sub.add_parser("evaluate", help="recompute verdict(s) from current metrics")
+    p_eval.add_argument("--id", help="experiment id; omit with --all")
+    p_eval.add_argument("--all", action="store_true", help="evaluate every experiment")
+
+    args = ap.parse_args()
     L = Ledger()
-    if len(sys.argv) > 1 and sys.argv[1] == "show":
+
+    if args.cmd == "show":
+        print(f"goal: {L.goal}")
         print(f"checkpoints: {len(L.checkpoints)} | experiments: {len(L.experiments)}\n")
         print(L.inquiry_dag())
+        return
+
+    if args.cmd == "read":
+        if args.section == "summary":
+            out = L.summary()
+        elif args.section == "meta":
+            out = L.meta
+        elif args.section == "checkpoints":
+            out = L.checkpoints[args.id] if args.id else L.checkpoints
+        elif args.section == "experiments":
+            out = L.experiments[args.id] if args.id else L.experiments
+        else:  # all
+            out = {"meta": L.meta, "checkpoints": L.checkpoints, "experiments": L.experiments}
+        print(json.dumps(out, indent=2))
+        return
+
+    if args.cmd == "goal":
+        if args.set_to:
+            L.set_goal(args.set_to); L.save()
+        print(L.goal)
+        return
+
+    if args.cmd == "frontier":
+        print(json.dumps(L.frontier(args.metric, args.top), indent=2))
+        return
+
+    if args.cmd == "add-checkpoint":
+        node = L.add_checkpoint(args.id, parent=args.parent, config=json.loads(args.config),
+                                status=args.status, metrics=json.loads(args.metrics),
+                                checkpoint=args.checkpoint)
+        L.save()
+        print(f"added checkpoint {args.id} (status={node['status']}, parent={node['parent']})")
+        return
+
+    if args.cmd == "register":
+        exp = L.register(
+            args.id, question=args.question, hypothesis=args.hypothesis,
+            predicted=args.predicted, selector=json.loads(args.selector),
+            metric=json.loads(args.metric), decision_rule=json.loads(args.decision_rule),
+            anchor=args.anchor, motivated_by=args.motivated_by)
+        L.save()
+        print(f"registered {args.id}: resolves {exp['resolved_nodes']}; "
+              f"power: {exp['power_check']['note']}")
+        return
+
+    if args.cmd == "evaluate":
+        eids = list(L.experiments) if args.all else [args.id]
+        for eid in eids:
+            v = L.evaluate(eid)
+            print(f"[{eid}] {v['result'].upper()}  finding={v.get('finding')}"
+                  + (f"  ({v['why']})" if v.get("why") else ""))
+        L.save()
+        return
+
+
+if __name__ == "__main__":
+    _main()

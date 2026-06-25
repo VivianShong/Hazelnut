@@ -1,0 +1,14 @@
+{
+  "final_reward": 0.0,
+  "best_reward": 0.0,
+  "mean_reward": 0.0,
+  "steps": 0,
+  "peak_vram_mb": 4111.9677734375,
+  "total_seconds": 701.094217300415,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint",
+  "last_breakdown": null,
+  "eval_curve": [],
+  "eval_passrate": 0.46,
+  "eval_compile": 0.86,
+  "eval_n": 50
+}

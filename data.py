@@ -23,12 +23,39 @@ offline smoke tests: `load_dataset(split, source="dummy")`.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 # Absolute path: stable whether this file lives in the worktree or repo root after merge.
 DATA_ROOT = Path("/opt/Hazelnut/data")
 APPS_DIR = DATA_ROOT / "apps"
 MBPP_DIR = DATA_ROOT / "mbpp"  # cached HF dataset (created on first load)
+
+# --------------------------------------------------------------------------
+# Chain-of-thought prompt toggle (experiment knob, not a code change to the
+# GRPO loop / reward harness). When env var GRPO_COT is truthy, prompts ask the
+# model to reason step-by-step in plain text *before* emitting the single final
+# ```python``` block. rewards.extract_code() takes the FIRST python fence, so
+# the reasoning text is free and is reinforced only when it yields correct code.
+# --------------------------------------------------------------------------
+
+_COT_INSTRUCTION = (
+    "First, think step by step about the approach in plain text "
+    "(edge cases, algorithm, the function signature). Do NOT write any code "
+    "during this reasoning. Then, on a new line, give the complete final "
+    "solution in a single ```python code block."
+)
+
+
+def _cot_enabled() -> bool:
+    return os.environ.get("GRPO_COT", "").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _maybe_cot(prompt: str) -> str:
+    """Append the chain-of-thought reasoning instruction when GRPO_COT is set."""
+    if _cot_enabled():
+        return prompt + "\n\n" + _COT_INSTRUCTION
+    return prompt
 
 # --------------------------------------------------------------------------
 # Dummy fallback set (assert-style)
@@ -69,7 +96,7 @@ def _build_prompt(question: str, starter_code: str, fn_name: str | None) -> str:
     if starter_code and starter_code.strip():
         parts.append("\nUse this starter code:\n```python\n" + starter_code.strip() + "\n```")
     parts.append("\nProvide a complete solution in a single ```python code block.")
-    return "\n".join(parts)
+    return _maybe_cot("\n".join(parts))
 
 
 def _row_to_problem(row: dict) -> dict | None:
@@ -115,7 +142,7 @@ def _build_mbpp_prompt(text: str, test_list: list[str]) -> str:
     # Showing the asserts is the MBPP convention: it reveals the expected
     # function name/signature the solution must define.
     tests = "\n".join(test_list)
-    return (
+    return _maybe_cot(
         "Write Python code to solve the following task.\n\n"
         f"Task:\n{text.strip()}\n\n"
         f"Your code must pass these tests:\n{tests}\n\n"

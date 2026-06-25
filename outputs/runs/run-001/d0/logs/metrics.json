@@ -1,0 +1,23 @@
+{
+  "final_reward": 0.7562499642372131,
+  "best_reward": 0.9458333253860474,
+  "mean_reward": 0.5729166433215142,
+  "steps": 40,
+  "peak_vram_mb": 8101.3037109375,
+  "total_seconds": 4192.0002291202545,
+  "checkpoint": "/opt/Hazelnut/worktrees/grpo/runs/d0",
+  "last_breakdown": {
+    "reward": 1.0,
+    "compiles": 1.0,
+    "correctness": 1.0,
+    "style": 1.0,
+    "security": 1.0,
+    "n_tests": 3,
+    "n_passed": 3,
+    "error": null
+  },
+  "eval_curve": [],
+  "eval_passrate": 0.44,
+  "eval_compile": 0.96,
+  "eval_n": 50
+}

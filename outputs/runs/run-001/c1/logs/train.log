@@ -1,0 +1,46 @@
+Current Python version 3.10 is below the recommended 3.11 version. It is recommended to upgrade to Python 3.11 or higher for the best experience.
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<01:35,  3.35it/s]Loading weights:  12%|█▏        | 39/320 [00:00<00:02, 124.00it/s]Loading weights:  21%|██        | 67/320 [00:00<00:01, 170.45it/s]Loading weights:  31%|███       | 99/320 [00:00<00:01, 211.85it/s]Loading weights:  44%|████▍     | 142/320 [00:00<00:00, 276.33it/s]Loading weights:  55%|█████▍    | 175/320 [00:00<00:00, 278.86it/s]Loading weights:  64%|██████▍   | 206/320 [00:00<00:00, 278.23it/s]Loading weights:  77%|███████▋  | 247/320 [00:01<00:00, 306.75it/s]Loading weights:  88%|████████▊ | 280/320 [00:01<00:00, 306.82it/s]Loading weights:  98%|█████████▊| 312/320 [00:01<00:00, 300.75it/s]Loading weights: 100%|██████████| 320/320 [00:01<00:00, 249.47it/s]
+Resuming LoRA adapter from /opt/Hazelnut/worktrees/grpo/runs/c0
+trainable params: 16,819,200 || all params: 1,898,644,288 || trainable%: 0.8859
+Loaded 374 training problems (source=mbpp)
+step 000 | reward 0.544 | correct 0.500 | compile 0.625 | kl 0.0376 | loss 0.0012 | 125s/5000s
+step 001 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.1011 | loss 0.0042 | 163s/5000s
+step 002 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0318 | loss 0.0017 | 264s/5000s
+step 003 | reward 0.685 | correct 0.583 | compile 0.875 | kl 0.0818 | loss 0.0055 | 364s/5000s
+step 004 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0404 | loss 0.0022 | 423s/5000s
+step 005 | reward 0.469 | correct 0.250 | compile 0.875 | kl 0.0327 | loss 0.0012 | 524s/5000s
+step 006 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0456 | loss 0.0028 | 548s/5000s
+step 007 | reward 0.469 | correct 0.250 | compile 0.875 | kl 0.0291 | loss 0.0007 | 629s/5000s
+step 008 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.1340 | loss 0.0067 | 669s/5000s
+step 009 | reward 0.783 | correct 0.667 | compile 1.000 | kl 0.0483 | loss 0.0026 | 714s/5000s
+step 010 | reward 0.729 | correct 0.583 | compile 1.000 | kl 0.0385 | loss 0.0004 | 743s/5000s
+step 011 | reward 0.377 | correct 0.042 | compile 1.000 | kl 0.0590 | loss 0.0034 | 811s/5000s
+step 012 | reward 0.415 | correct 0.167 | compile 0.875 | kl 0.0324 | loss 0.0030 | 892s/5000s
+step 013 | reward 0.783 | correct 0.667 | compile 1.000 | kl 0.0282 | loss 0.0019 | 945s/5000s
+step 014 | reward 0.540 | correct 0.292 | compile 1.000 | kl 0.1168 | loss 0.0038 | 1000s/5000s
+step 015 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0413 | loss 0.0026 | 1043s/5000s
+step 016 | reward 0.648 | correct 0.458 | compile 1.000 | kl 0.0724 | loss 0.0026 | 1078s/5000s
+step 017 | reward 0.973 | correct 0.958 | compile 1.000 | kl 0.0749 | loss 0.0028 | 1096s/5000s
+step 018 | reward 0.485 | correct 0.208 | compile 1.000 | kl 0.0590 | loss 0.0039 | 1152s/5000s
+step 019 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0293 | loss 0.0024 | 1267s/5000s
+step 020 | reward 0.415 | correct 0.167 | compile 0.875 | kl 0.0246 | loss 0.0023 | 1394s/5000s
+step 021 | reward 0.567 | correct 0.333 | compile 1.000 | kl 0.0669 | loss 0.0047 | 1427s/5000s
+step 022 | reward 0.496 | correct 0.292 | compile 0.875 | kl 0.0862 | loss 0.0029 | 1473s/5000s
+step 023 | reward 0.783 | correct 0.667 | compile 1.000 | kl 0.0330 | loss 0.0013 | 1527s/5000s
+step 024 | reward 0.648 | correct 0.458 | compile 1.000 | kl 0.0310 | loss 0.0011 | 1601s/5000s
+step 025 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0441 | loss 0.0019 | 1667s/5000s
+step 026 | reward 0.567 | correct 0.333 | compile 1.000 | kl 0.1017 | loss 0.0049 | 1723s/5000s
+step 027 | reward 0.865 | correct 0.792 | compile 1.000 | kl 0.0736 | loss 0.0056 | 1781s/5000s
+step 028 | reward 0.837 | correct 0.750 | compile 1.000 | kl 0.0433 | loss 0.0017 | 1837s/5000s
+step 029 | reward 0.837 | correct 0.750 | compile 1.000 | kl 0.0520 | loss 0.0032 | 1879s/5000s
+step 030 | reward 0.621 | correct 0.417 | compile 1.000 | kl 0.0289 | loss 0.0032 | 1938s/5000s
+step 031 | reward 0.892 | correct 0.833 | compile 1.000 | kl 0.0274 | loss 0.0007 | 2016s/5000s
+step 032 | reward 0.377 | correct 0.042 | compile 1.000 | kl 0.0424 | loss 0.0019 | 2115s/5000s
+step 033 | reward 0.729 | correct 0.583 | compile 1.000 | kl 0.0843 | loss 0.0023 | 2156s/5000s
+step 034 | reward 0.838 | correct 0.750 | compile 1.000 | kl 0.0522 | loss 0.0035 | 2192s/5000s
+step 035 | reward 0.973 | correct 0.958 | compile 1.000 | kl 0.0428 | loss 0.0025 | 2229s/5000s
+step 036 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0875 | loss 0.0047 | 2288s/5000s
+step 037 | reward 0.594 | correct 0.375 | compile 1.000 | kl 0.0484 | loss 0.0023 | 2359s/5000s
+step 038 | reward 0.621 | correct 0.417 | compile 1.000 | kl 0.0337 | loss 0.0019 | 2452s/5000s
+step 039 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0439 | loss 0.0020 | 2511s/5000s

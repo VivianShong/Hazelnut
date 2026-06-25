@@ -52,8 +52,8 @@ DEFAULT_MODEL_PATH = "/opt/Hazelnut/models/qwen3.5-2b-Base"
 class GRPOConfig:
     # --- model / io ---
     model_path: str = DEFAULT_MODEL_PATH
-    output_dir: str = "out/grpo"
-    init_from: str = ""            # parent LoRA adapter dir to resume from; "" = fresh from base
+    output_dir: str = "outputs/runs/run-001/node-a0"  # node dir: adapter -> model_checkpoint/, receipts -> logs/
+    init_from: str = ""            # parent's model_checkpoint/ dir to resume from; "" = fresh from base
     seed: int = 42
     # --- LoRA (what we actually train) ---
     lora_r: int = 16
@@ -317,11 +317,14 @@ def train(**overrides) -> dict:
             print(f"[eval@{step}] pass@1={em.get('eval_passrate'):.3f} "
                   f"compile={em.get('eval_compile'):.3f}", flush=True)
             out = Path(cfg.output_dir)
-            out.mkdir(parents=True, exist_ok=True)
-            with open(out / "eval_curve.jsonl", "a") as f:
+            ckpt_dir = out / "model_checkpoint"   # LoRA adapter (gitignored)
+            log_dir = out / "logs"                # receipts (committed)
+            ckpt_dir.mkdir(parents=True, exist_ok=True)
+            log_dir.mkdir(parents=True, exist_ok=True)
+            with open(log_dir / "eval_curve.jsonl", "a") as f:
                 f.write(json.dumps(em) + "\n")
-            model.save_pretrained(str(out))  # latest snapshot survives a later crash
-            model.train()                    # restore train mode for the next step
+            model.save_pretrained(str(ckpt_dir))  # latest snapshot survives a later crash
+            model.train()                          # restore train mode for the next step
 
     # --- held-out eval (clean comparable score across nodes) ---
     eval_metrics = {}
@@ -331,11 +334,14 @@ def train(**overrides) -> dict:
               f"pass@1={eval_metrics.get('eval_passrate'):.3f} "
               f"compile={eval_metrics.get('eval_compile'):.3f}", flush=True)
 
-    # --- save adapter ---
+    # --- save adapter (model_checkpoint/) + receipts (logs/) ---
     out = Path(cfg.output_dir)
-    out.mkdir(parents=True, exist_ok=True)
-    model.save_pretrained(str(out))
-    tok.save_pretrained(str(out))
+    ckpt_dir = out / "model_checkpoint"   # LoRA adapter (gitignored)
+    log_dir = out / "logs"                # receipts (committed)
+    ckpt_dir.mkdir(parents=True, exist_ok=True)
+    log_dir.mkdir(parents=True, exist_ok=True)
+    model.save_pretrained(str(ckpt_dir))
+    tok.save_pretrained(str(ckpt_dir))
 
     peak_vram_mb = torch.cuda.max_memory_allocated() / 1024 / 1024
     final_reward = reward_hist[-1] if reward_hist else 0.0
@@ -347,14 +353,14 @@ def train(**overrides) -> dict:
         "steps": step,
         "peak_vram_mb": peak_vram_mb,
         "total_seconds": time.time() - t_start,
-        "checkpoint": str(out),
+        "checkpoint": str(ckpt_dir),
         "last_breakdown": last_breakdown,
         "eval_curve": eval_curve,
         **eval_metrics,
     }
 
     # Machine-readable hand-off for the experiment driver (robust vs stdout parsing).
-    (out / "metrics.json").write_text(json.dumps(metrics, indent=2))
+    (log_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
 
     print("---")
     print(f"final_reward:     {metrics['final_reward']:.6f}")
