@@ -1,24 +1,22 @@
-# Hazelnut — an autonomous RL-science agent
+# Repurrr
 
-An LLM research agent that does **RL science** on a GRPO substrate. It post-trains
-**Qwen3.5-2B-Base** to write better Python (MBPP), but the headline is the *scientific loop*,
-not a single best checkpoint: the agent forms **hypotheses**, pre-registers **experiments**
-(with a power check), runs them on a deterministic GRPO + reward substrate, and writes
-**verdicts** that spawn the next hypothesis. Built on Karpathy's autoresearch framework.
+## What we did
 
-**Success = good science**, not best pass@1: correct, *adequately-powered* conclusions;
-first-class negative results; verdicts that survive replication — per unit of compute.
-MBPP pass@1 is the *substrate*, not the objective.
+We gave a frontier agent one goal — make Qwen3.5-2B-Base write better Python — a single 16GB T4, and no further instructions. It ran its own research lab overnight: 5 experiments, zero human inputs after launch.
 
-> Status & findings live in `PROGRESS.md`. Exp 1–3 already ran this loop by hand:
-> hypothesis → underpowered null → diagnose dose → confirm → re-test.
+It pushed held-out MBPP pass@1 from 0.46 to 0.62. Along the way it hit a null result and diagnosed its own under-dosed learning rate, confirmed the fix, then when a deeper run regressed it backtracked to its best checkpoint and re-explored at a gentler setting. It even killed two of its own bad configs before spending GPU on them.
 
-## Two-model system
-- **Research agent** (large hosted model, runs as a Claude Code skill in `.github/skills/`):
-  forms hypotheses, designs experiments (config dicts + arms), reads results, writes verdicts.
-  **Never edits training code.** Tools: bash (hardware probe), the ledger.
-- **Trainee** (Qwen3.5-2B-Base, local GPU): post-trained with GRPO/LoRA; emits code scored by a
-  **deterministic** reward harness (not the LLM).
+## How it operates
+
+The agent forms a hypothesis, pre-registers the metric and a power check, and writes it to a ledger. A deterministic driver runs the GRPO training and scores it. The agent reads back a machine-computed verdict — confirmed, refuted, or inconclusive — and decides what to ask next.
+
+It never touches the training code; it can only write to the ledger. Every run is a falsifiable claim in a growing inquiry graph, with dead ends, a frontier, and recovery.
+
+## What it can scale to
+
+**More compute:** the same loop runs deeper chains, parallel arms, and harder questions. Karpathy's agent ran 276 experiments across days on 8×H100; ours ran 5 on one T4. The ceiling is GPUs, not design.
+
+**More capable models:** the substrate is swappable. Point it at any task with a deterministic evaluator and it researches that instead. The end of the line is the loop turned on the research agent itself — research that improves the thing doing the research.
 
 ## The ledger — `outputs/ledger.json` (what the agent reads/writes)
 `Goal → Hypotheses ⇄ Experiments`, linked both ways (an experiment's result feeds back into
