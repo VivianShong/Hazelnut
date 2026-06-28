@@ -1,0 +1,8 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "headline": "inquiry-DAG over a checkpoint substrate"
+  },
+  "checkpoints": {},
+  "experiments": {}
+}

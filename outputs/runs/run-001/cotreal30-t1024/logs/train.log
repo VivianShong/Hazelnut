@@ -1,0 +1,15 @@
+Current Python version 3.10 is below the recommended 3.11 version. It is recommended to upgrade to Python 3.11 or higher for the best experience.
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<01:24,  3.78it/s]Loading weights:  12%|█▎        | 40/320 [00:00<00:02, 137.50it/s]Loading weights:  23%|██▎       | 75/320 [00:00<00:01, 204.72it/s]Loading weights:  33%|███▎      | 105/320 [00:00<00:00, 234.93it/s]Loading weights:  45%|████▌     | 145/320 [00:00<00:00, 283.17it/s]Loading weights:  57%|█████▋    | 181/320 [00:00<00:00, 302.52it/s]Loading weights:  67%|██████▋   | 214/320 [00:00<00:00, 307.48it/s]Loading weights:  79%|███████▉  | 252/320 [00:00<00:00, 328.25it/s]Loading weights:  91%|█████████ | 290/320 [00:01<00:00, 341.57it/s]Loading weights: 100%|██████████| 320/320 [00:01<00:00, 269.60it/s]
+trainable params: 16,819,200 || all params: 1,898,644,288 || trainable%: 0.8859
+Loaded 256 training problems (source=mbpp)
+Traceback (most recent call last):
+  File "/opt/Hazelnut/worktrees/refactor/grpo.py", line 392, in <module>
+    train(**vars(args))
+  File "/opt/Hazelnut/worktrees/refactor/grpo.py", line 281, in train
+    new_lp = _seq_logprobs(model, seqs, prompt_len, gen_mask, 1)
+  File "/opt/Hazelnut/worktrees/refactor/grpo.py", line 173, in _seq_logprobs
+    logp = F.log_softmax(logits.float(), dim=-1)
+  File "/opt/Hazelnut/worktrees/refactor/.venv/lib/python3.10/site-packages/torch/nn/functional.py", line 2241, in log_softmax
+    ret = input.log_softmax(dim)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 970.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 294.81 MiB is free. Including non-PyTorch memory, this process has 14.27 GiB memory in use. Of the allocated memory 12.87 GiB is allocated by PyTorch, and 1.14 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

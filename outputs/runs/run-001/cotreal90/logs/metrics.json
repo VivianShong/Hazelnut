@@ -1,0 +1,23 @@
+{
+  "final_reward": 0.512499988079071,
+  "best_reward": 1.0,
+  "mean_reward": 0.7070833106835683,
+  "steps": 30,
+  "peak_vram_mb": 10661.34912109375,
+  "total_seconds": 3337.6682126522064,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint",
+  "last_breakdown": {
+    "reward": 0.35,
+    "compiles": 1.0,
+    "correctness": 0.0,
+    "style": 1.0,
+    "security": 1.0,
+    "n_tests": 3,
+    "n_passed": 0,
+    "error": "IndexError: list index out of range"
+  },
+  "eval_curve": [],
+  "eval_passrate": 0.615,
+  "eval_compile": 0.955,
+  "eval_n": 200
+}

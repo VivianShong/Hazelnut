@@ -1,0 +1,14 @@
+Current Python version 3.10 is below the recommended 3.11 version. It is recommended to upgrade to Python 3.11 or higher for the best experience.
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<01:44,  3.05it/s]Loading weights:  11%|█         | 35/320 [00:00<00:02, 104.96it/s]Loading weights:  20%|██        | 65/320 [00:00<00:01, 161.20it/s]Loading weights:  29%|██▉       | 94/320 [00:00<00:01, 193.69it/s]Loading weights:  38%|███▊      | 121/320 [00:00<00:00, 215.94it/s]Loading weights:  47%|████▋     | 151/320 [00:00<00:00, 237.51it/s]Loading weights:  58%|█████▊    | 185/320 [00:00<00:00, 261.32it/s]Loading weights:  67%|██████▋   | 214/320 [00:01<00:00, 265.42it/s]Loading weights:  77%|███████▋  | 246/320 [00:01<00:00, 274.17it/s]Loading weights:  87%|████████▋ | 278/320 [00:01<00:00, 284.65it/s]Loading weights:  96%|█████████▋| 308/320 [00:01<00:00, 286.10it/s]Loading weights: 100%|██████████| 320/320 [00:01<00:00, 225.57it/s]
+trainable params: 16,819,200 || all params: 1,898,644,288 || trainable%: 0.8859
+Loaded 256 training problems (source=mbpp)
+eval (held-out, greedy, n=200): pass@1=0.450 compile=0.970
+---
+final_reward:     0.000000
+best_reward:      0.000000
+mean_reward:      0.000000
+steps:            0
+peak_vram_mb:     4176.7
+total_seconds:    1810.4
+checkpoint:       /opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base-hi/model_checkpoint

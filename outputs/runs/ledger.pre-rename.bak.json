@@ -3,7 +3,7 @@
     "schema_version": 2,
     "headline": "inquiry-DAG over a checkpoint substrate",
     "goal": "improve Qwen3.5-2B-base's pass rate on MBPP dataset",
-    "updated_at": "2026-06-26T10:47:55+00:00"
+    "updated_at": "2026-06-25T22:20:50+00:00"
   },
   "checkpoints": {
     "base50": {
@@ -32,8 +32,8 @@
       },
       "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint"
     },
-    "grpo30": {
-      "id": "grpo30",
+    "cot30": {
+      "id": "cot30",
       "parent": "base50",
       "status": "done",
       "config": {
@@ -55,7 +55,7 @@
         "steps": 30,
         "peak_vram_mb": 10740.68212890625,
         "total_seconds": 5843.593190670013,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo30/model_checkpoint",
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot30/model_checkpoint",
         "last_breakdown": {
           "reward": 0.35,
           "compiles": 1.0,
@@ -71,11 +71,11 @@
         "eval_compile": 0.94,
         "eval_n": 50
       },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo30/model_checkpoint"
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot30/model_checkpoint"
     },
-    "grpo60": {
-      "id": "grpo60",
-      "parent": "grpo30",
+    "cot60": {
+      "id": "cot60",
+      "parent": "cot30",
       "status": "done",
       "config": {
         "train_steps": 30,
@@ -96,7 +96,7 @@
         "steps": 30,
         "peak_vram_mb": 10697.60400390625,
         "total_seconds": 5472.641374826431,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60/model_checkpoint",
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60/model_checkpoint",
         "last_breakdown": {
           "reward": 0.0,
           "compiles": 0.0,
@@ -112,7 +112,7 @@
         "eval_compile": 0.98,
         "eval_n": 50
       },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60/model_checkpoint"
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60/model_checkpoint"
     },
     "plain60": {
       "id": "plain60",
@@ -127,9 +127,9 @@
       },
       "checkpoint": null
     },
-    "grpo90": {
-      "id": "grpo90",
-      "parent": "grpo60",
+    "cot90": {
+      "id": "cot90",
+      "parent": "cot60",
       "status": "done",
       "config": {
         "train_steps": 30,
@@ -150,7 +150,7 @@
         "steps": 30,
         "peak_vram_mb": 10739.48486328125,
         "total_seconds": 5800.041665315628,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint",
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot90/model_checkpoint",
         "last_breakdown": {
           "reward": 0.35,
           "compiles": 1.0,
@@ -166,11 +166,11 @@
         "eval_compile": 0.94,
         "eval_n": 50
       },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint"
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot90/model_checkpoint"
     },
-    "grpo100-t256": {
-      "id": "grpo100-t256",
-      "parent": "grpo90",
+    "cot100-t256": {
+      "id": "cot100-t256",
+      "parent": "cot90",
       "status": "failed",
       "config": {
         "train_steps": 10,
@@ -181,9 +181,9 @@
       },
       "checkpoint": null
     },
-    "grpo60-lo": {
-      "id": "grpo60-lo",
-      "parent": "grpo60",
+    "cot60-lo": {
+      "id": "cot60-lo",
+      "parent": "cot60",
       "status": "done",
       "config": {
         "train_steps": 30,
@@ -204,7 +204,7 @@
         "steps": 30,
         "peak_vram_mb": 10695.8134765625,
         "total_seconds": 5760.6158356666565,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-lo/model_checkpoint",
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60-lo/model_checkpoint",
         "last_breakdown": {
           "reward": 1.0,
           "compiles": 1.0,
@@ -220,11 +220,11 @@
         "eval_compile": 1.0,
         "eval_n": 50
       },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-lo/model_checkpoint"
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60-lo/model_checkpoint"
     },
-    "grpo120": {
-      "id": "grpo120",
-      "parent": "grpo90",
+    "cot120": {
+      "id": "cot120",
+      "parent": "cot90",
       "status": "done",
       "config": {
         "train_steps": 30,
@@ -245,7 +245,7 @@
         "steps": 30,
         "peak_vram_mb": 10600.6923828125,
         "total_seconds": 3748.20392203331,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120/model_checkpoint",
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot120/model_checkpoint",
         "last_breakdown": {
           "reward": 0.35,
           "compiles": 1.0,
@@ -261,7 +261,7 @@
         "eval_compile": 1.0,
         "eval_n": 50
       },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120/model_checkpoint"
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot120/model_checkpoint"
     },
     "base-hi": {
       "id": "base-hi",
@@ -290,9 +290,9 @@
       },
       "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base-hi/model_checkpoint"
     },
-    "grpo60-hi": {
-      "id": "grpo60-hi",
-      "parent": "grpo60",
+    "cot60-hi": {
+      "id": "cot60-hi",
+      "parent": "cot60",
       "status": "done",
       "config": {
         "train_steps": 0,
@@ -308,19 +308,19 @@
         "steps": 0,
         "peak_vram_mb": 4176.71240234375,
         "total_seconds": 1409.9160151481628,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-hi/model_checkpoint",
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60-hi/model_checkpoint",
         "last_breakdown": null,
         "eval_curve": [],
         "eval_passrate": 0.605,
         "eval_compile": 0.995,
         "eval_n": 200
       },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-hi/model_checkpoint"
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60-hi/model_checkpoint"
     },
     "cotreal30": {
       "id": "cotreal30",
       "parent": null,
-      "status": "done",
+      "status": "running",
       "config": {
         "train_steps": 30,
         "lr": 5e-05,
@@ -333,228 +333,8 @@
         "eval_batch": 8,
         "time_budget": 11000
       },
-      "metrics": {
-        "final_reward": 0.8374999761581421,
-        "best_reward": 0.918749988079071,
-        "mean_reward": 0.6438194235165914,
-        "steps": 30,
-        "peak_vram_mb": 10697.60400390625,
-        "total_seconds": 5233.2012667655945,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint",
-        "last_breakdown": {
-          "reward": 1.0,
-          "compiles": 1.0,
-          "correctness": 1.0,
-          "style": 1.0,
-          "security": 1.0,
-          "n_tests": 3,
-          "n_passed": 3,
-          "error": null
-        },
-        "eval_curve": [],
-        "eval_passrate": 0.5,
-        "eval_compile": 0.98,
-        "eval_n": 200
-      },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint"
-    },
-    "cotreal60": {
-      "id": "cotreal60",
-      "parent": "cotreal30",
-      "status": "done",
-      "config": {
-        "train_steps": 30,
-        "lr": 5e-05,
-        "kl_coeff": 0.04,
-        "num_prompts": 2,
-        "group_size": 4,
-        "temperature": 0.9,
-        "max_new_tokens": 640,
-        "eval_n": 200,
-        "eval_batch": 8,
-        "time_budget": 11000
-      },
-      "metrics": {
-        "final_reward": 0.5937499403953552,
-        "best_reward": 1.0,
-        "mean_reward": 0.6572221994400025,
-        "steps": 30,
-        "peak_vram_mb": 10723.56689453125,
-        "total_seconds": 5494.299064159393,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal60/model_checkpoint",
-        "last_breakdown": {
-          "reward": 0.35,
-          "compiles": 1.0,
-          "correctness": 0.0,
-          "style": 1.0,
-          "security": 1.0,
-          "n_tests": 3,
-          "n_passed": 0,
-          "error": "AssertionError: "
-        },
-        "eval_curve": [],
-        "eval_passrate": 0.575,
-        "eval_compile": 0.96,
-        "eval_n": 200
-      },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal60/model_checkpoint"
-    },
-    "cotreal90": {
-      "id": "cotreal90",
-      "parent": "cotreal60",
-      "status": "done",
-      "config": {
-        "train_steps": 30,
-        "lr": 5e-05,
-        "kl_coeff": 0.04,
-        "num_prompts": 2,
-        "group_size": 4,
-        "temperature": 0.9,
-        "max_new_tokens": 640,
-        "eval_n": 200,
-        "eval_batch": 8,
-        "time_budget": 11000
-      },
-      "metrics": {
-        "final_reward": 0.512499988079071,
-        "best_reward": 1.0,
-        "mean_reward": 0.7070833106835683,
-        "steps": 30,
-        "peak_vram_mb": 10661.34912109375,
-        "total_seconds": 3337.6682126522064,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint",
-        "last_breakdown": {
-          "reward": 0.35,
-          "compiles": 1.0,
-          "correctness": 0.0,
-          "style": 1.0,
-          "security": 1.0,
-          "n_tests": 3,
-          "n_passed": 0,
-          "error": "IndexError: list index out of range"
-        },
-        "eval_curve": [],
-        "eval_passrate": 0.615,
-        "eval_compile": 0.955,
-        "eval_n": 200
-      },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint"
-    },
-    "cotreal30-t1024": {
-      "id": "cotreal30-t1024",
-      "parent": null,
-      "status": "failed",
-      "config": {
-        "train_steps": 30,
-        "lr": 5e-05,
-        "kl_coeff": 0.04,
-        "num_prompts": 2,
-        "group_size": 4,
-        "temperature": 0.9,
-        "max_new_tokens": 1024,
-        "eval_n": 200,
-        "eval_batch": 8,
-        "time_budget": 12000
-      },
-      "metrics": {
-        "error": "Command '['uv', 'run', 'python', '-u', 'grpo.py', '--output-dir', '/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30-t1024', '--train-steps', '30', '--lr', '5e-05', '--kl-coeff', '0.04', '--num-prompts', '2', '--group-size', '4', '--temperature', '0.9', '--max-new-tokens', '1024', '--eval-n', '200', '--eval-batch', '8', '--time-budget', '12000']' returned non-zero exit status 1."
-      },
+      "metrics": {},
       "checkpoint": null
-    },
-    "cotreal120": {
-      "id": "cotreal120",
-      "parent": "cotreal90",
-      "status": "done",
-      "config": {
-        "train_steps": 30,
-        "lr": 5e-05,
-        "kl_coeff": 0.04,
-        "num_prompts": 2,
-        "group_size": 4,
-        "temperature": 0.9,
-        "max_new_tokens": 640,
-        "eval_n": 200,
-        "eval_batch": 8,
-        "time_budget": 11000
-      },
-      "metrics": {
-        "final_reward": 0.59375,
-        "best_reward": 1.0,
-        "mean_reward": 0.7072916408379872,
-        "steps": 30,
-        "peak_vram_mb": 10515.99462890625,
-        "total_seconds": 3661.1944069862366,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal120/model_checkpoint",
-        "last_breakdown": {
-          "reward": 0.35,
-          "compiles": 1.0,
-          "correctness": 0.0,
-          "style": 1.0,
-          "security": 1.0,
-          "n_tests": 3,
-          "n_passed": 0,
-          "error": "AssertionError: "
-        },
-        "eval_curve": [],
-        "eval_passrate": 0.615,
-        "eval_compile": 0.965,
-        "eval_n": 200
-      },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal120/model_checkpoint"
-    },
-    "grpo90-hi": {
-      "id": "grpo90-hi",
-      "parent": "grpo90",
-      "status": "done",
-      "config": {
-        "train_steps": 0,
-        "eval_n": 200,
-        "max_new_tokens": 640,
-        "eval_batch": 8,
-        "time_budget": 6000
-      },
-      "metrics": {
-        "final_reward": 0.0,
-        "best_reward": 0.0,
-        "mean_reward": 0.0,
-        "steps": 0,
-        "peak_vram_mb": 4176.71240234375,
-        "total_seconds": 1165.906075000763,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint",
-        "last_breakdown": null,
-        "eval_curve": [],
-        "eval_passrate": 0.625,
-        "eval_compile": 0.995,
-        "eval_n": 200
-      },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint"
-    },
-    "grpo120-hi": {
-      "id": "grpo120-hi",
-      "parent": "grpo120",
-      "status": "done",
-      "config": {
-        "train_steps": 0,
-        "eval_n": 200,
-        "max_new_tokens": 640,
-        "eval_batch": 8,
-        "time_budget": 6000
-      },
-      "metrics": {
-        "final_reward": 0.0,
-        "best_reward": 0.0,
-        "mean_reward": 0.0,
-        "steps": 0,
-        "peak_vram_mb": 4176.71240234375,
-        "total_seconds": 1661.3044679164886,
-        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint",
-        "last_breakdown": null,
-        "eval_curve": [],
-        "eval_passrate": 0.61,
-        "eval_compile": 0.975,
-        "eval_n": 200
-      },
-      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint"
     }
   },
   "experiments": {
@@ -565,12 +345,12 @@
       "predicted": "improved",
       "selector": {
         "type": "path",
-        "tip": "grpo30"
+        "tip": "cot30"
       },
       "anchor": "base50",
       "resolved_nodes": [
         "base50",
-        "grpo30"
+        "cot30"
       ],
       "metric": {
         "name": "eval_passrate",
@@ -619,7 +399,7 @@
           "min_detectable_effect_2sigma": 0.141,
           "note": "can't resolve effects < 0.141"
         },
-        "written_at": "2026-06-26T10:47:55+00:00"
+        "written_at": "2026-06-25T22:14:26+00:00"
       },
       "created_at": "2026-06-25T08:22:08+00:00"
     },
@@ -630,13 +410,13 @@
       "predicted": "improved",
       "selector": {
         "type": "path",
-        "tip": "grpo60"
+        "tip": "cot60"
       },
       "anchor": "base50",
       "resolved_nodes": [
         "base50",
-        "grpo30",
-        "grpo60"
+        "cot30",
+        "cot60"
       ],
       "metric": {
         "name": "eval_passrate",
@@ -689,7 +469,7 @@
           "min_detectable_effect_2sigma": 0.141,
           "note": "can't resolve effects < 0.141"
         },
-        "written_at": "2026-06-26T10:47:55+00:00"
+        "written_at": "2026-06-25T22:14:26+00:00"
       },
       "created_at": "2026-06-25T10:19:22+00:00"
     },
@@ -703,7 +483,7 @@
         "arms": {
           "cot": {
             "type": "point",
-            "node": "grpo60"
+            "node": "cot60"
           },
           "plain": {
             "type": "point",
@@ -713,7 +493,7 @@
       },
       "anchor": null,
       "resolved_nodes": [
-        "grpo60",
+        "cot60",
         "plain60"
       ],
       "metric": {
@@ -731,12 +511,7 @@
         "note": "can't resolve effects < 0.141"
       },
       "motivated_by": "e2",
-      "verdict": {
-        "result": "pending",
-        "finding": null,
-        "why": "arms not all complete",
-        "written_at": "2026-06-26T00:19:23+00:00"
-      },
+      "verdict": null,
       "created_at": "2026-06-25T12:47:17+00:00"
     },
     "e4": {
@@ -746,14 +521,14 @@
       "predicted": "improved",
       "selector": {
         "type": "path",
-        "tip": "grpo90"
+        "tip": "cot90"
       },
       "anchor": "base50",
       "resolved_nodes": [
         "base50",
-        "grpo30",
-        "grpo60",
-        "grpo90"
+        "cot30",
+        "cot60",
+        "cot90"
       ],
       "metric": {
         "name": "eval_passrate",
@@ -810,7 +585,7 @@
           "min_detectable_effect_2sigma": 0.141,
           "note": "can't resolve effects < 0.141"
         },
-        "written_at": "2026-06-26T10:47:55+00:00"
+        "written_at": "2026-06-25T22:14:26+00:00"
       },
       "created_at": "2026-06-25T12:50:29+00:00"
     },
@@ -821,14 +596,14 @@
       "predicted": "improved",
       "selector": {
         "type": "path",
-        "tip": "grpo60-lo"
+        "tip": "cot60-lo"
       },
       "anchor": "base50",
       "resolved_nodes": [
         "base50",
-        "grpo30",
-        "grpo60",
-        "grpo60-lo"
+        "cot30",
+        "cot60",
+        "cot60-lo"
       ],
       "metric": {
         "name": "eval_passrate",
@@ -885,7 +660,7 @@
           "min_detectable_effect_2sigma": 0.141,
           "note": "can't resolve effects < 0.141"
         },
-        "written_at": "2026-06-26T10:47:55+00:00"
+        "written_at": "2026-06-25T22:14:26+00:00"
       },
       "created_at": "2026-06-25T14:31:29+00:00"
     },
@@ -896,15 +671,15 @@
       "predicted": "improved",
       "selector": {
         "type": "path",
-        "tip": "grpo120"
+        "tip": "cot120"
       },
       "anchor": "base50",
       "resolved_nodes": [
         "base50",
-        "grpo30",
-        "grpo60",
-        "grpo90",
-        "grpo120"
+        "cot30",
+        "cot60",
+        "cot90",
+        "cot120"
       ],
       "metric": {
         "name": "eval_passrate",
@@ -965,7 +740,7 @@
           "min_detectable_effect_2sigma": 0.141,
           "note": "can't resolve effects < 0.141"
         },
-        "written_at": "2026-06-26T10:47:55+00:00"
+        "written_at": "2026-06-25T22:14:26+00:00"
       },
       "created_at": "2026-06-25T19:18:47+00:00"
     },
@@ -979,7 +754,7 @@
         "arms": {
           "trained": {
             "type": "point",
-            "node": "grpo60-hi"
+            "node": "cot60-hi"
           },
           "base": {
             "type": "point",
@@ -989,7 +764,7 @@
       },
       "anchor": null,
       "resolved_nodes": [
-        "grpo60-hi",
+        "cot60-hi",
         "base-hi"
       ],
       "metric": {
@@ -1025,7 +800,7 @@
           "min_detectable_effect_2sigma": 0.071,
           "note": "can't resolve effects < 0.071"
         },
-        "written_at": "2026-06-26T10:47:55+00:00"
+        "written_at": "2026-06-25T22:14:26+00:00"
       },
       "created_at": "2026-06-25T21:20:02+00:00"
     },
@@ -1057,408 +832,8 @@
         "note": "can't resolve effects < 0.071"
       },
       "motivated_by": "e7",
-      "verdict": {
-        "result": "inconclusive",
-        "finding": "flat",
-        "evidence": {
-          "trajectory": [
-            [
-              0,
-              0.45
-            ],
-            [
-              30,
-              0.5
-            ]
-          ],
-          "anchor": 0.45,
-          "best": 0.5,
-          "best_step": 30,
-          "delta_vs_anchor": 0.05,
-          "sigma": 0.035,
-          "threshold": 0.071,
-          "plateau_onset_step": 30
-        },
-        "power": {
-          "eval_n": 200,
-          "sigma_at_p0.5": 0.035,
-          "min_detectable_effect_2sigma": 0.071,
-          "note": "can't resolve effects < 0.071"
-        },
-        "written_at": "2026-06-26T10:47:55+00:00"
-      },
+      "verdict": null,
       "created_at": "2026-06-25T22:20:27+00:00"
-    },
-    "e9": {
-      "id": "e9",
-      "question": "At matched 60-step dose and n=200, does the real CoT pipeline (cotreal60: CoT train+eval) beat, match, or lose to the plain-GRPO control grpo60-hi (0.605)?",
-      "hypothesis": "On simple MBPP function-writing a 2B base already reaches 0.605 with plain direct-coding; CoT mainly adds reasoning tokens (benefit largest on harder reasoning) and shares the 640-tok budget with the code. Predict CoT ~= plain (no_arm_effect); a positive CoT effect would refute the null and show CoT helps even here, a negative one would indicate a truncation penalty.",
-      "predicted": "no_arm_effect",
-      "selector": {
-        "type": "contrast",
-        "arms": {
-          "cot": {
-            "type": "point",
-            "node": "cotreal60"
-          },
-          "plain": {
-            "type": "point",
-            "node": "grpo60-hi"
-          }
-        }
-      },
-      "anchor": null,
-      "resolved_nodes": [
-        "cotreal60",
-        "grpo60-hi"
-      ],
-      "metric": {
-        "name": "eval_passrate",
-        "n": 200
-      },
-      "decision_rule": {
-        "type": "contrast_at_tip",
-        "k_sigma": 2
-      },
-      "power_check": {
-        "eval_n": 200,
-        "sigma_at_p0.5": 0.035,
-        "min_detectable_effect_2sigma": 0.071,
-        "note": "can't resolve effects < 0.071"
-      },
-      "motivated_by": "e8",
-      "verdict": {
-        "result": "inconclusive",
-        "finding": "no_arm_effect",
-        "evidence": {
-          "arm_values": {
-            "cot": 0.575,
-            "plain": 0.605
-          },
-          "diff": -0.03,
-          "pooled_sigma": 0.049,
-          "threshold": 0.098
-        },
-        "power": {
-          "eval_n": 200,
-          "sigma_at_p0.5": 0.035,
-          "min_detectable_effect_2sigma": 0.071,
-          "note": "can't resolve effects < 0.071"
-        },
-        "written_at": "2026-06-26T10:47:55+00:00"
-      },
-      "created_at": "2026-06-25T22:39:20+00:00"
-    },
-    "e10": {
-      "id": "e10",
-      "question": "Does CoT-GRPO keep raising MBPP pass@1 as dose deepens to 90 steps, or plateau (as plain GRPO did at ~60)?",
-      "hypothesis": "Plain GRPO plateaued ~0.62 by 60 steps. If CoT has a higher ceiling its chain should keep climbing past 60 toward 90; matching plain's plateau would mean CoT and plain share the same dose-response ceiling on MBPP.",
-      "predicted": "improved",
-      "selector": {
-        "type": "path",
-        "tip": "cotreal90"
-      },
-      "anchor": "base-hi",
-      "resolved_nodes": [
-        "cotreal30",
-        "cotreal60",
-        "cotreal90"
-      ],
-      "metric": {
-        "name": "eval_passrate",
-        "n": 200
-      },
-      "decision_rule": {
-        "type": "trend_vs_anchor",
-        "k_sigma": 2
-      },
-      "power_check": {
-        "eval_n": 200,
-        "sigma_at_p0.5": 0.035,
-        "min_detectable_effect_2sigma": 0.071,
-        "note": "can't resolve effects < 0.071"
-      },
-      "motivated_by": "e8",
-      "verdict": {
-        "result": "confirmed",
-        "finding": "improved",
-        "evidence": {
-          "trajectory": [
-            [
-              0,
-              0.45
-            ],
-            [
-              30,
-              0.5
-            ],
-            [
-              60,
-              0.575
-            ],
-            [
-              90,
-              0.615
-            ]
-          ],
-          "anchor": 0.45,
-          "best": 0.615,
-          "best_step": 90,
-          "delta_vs_anchor": 0.165,
-          "sigma": 0.034,
-          "threshold": 0.069,
-          "plateau_onset_step": 90
-        },
-        "power": {
-          "eval_n": 200,
-          "sigma_at_p0.5": 0.035,
-          "min_detectable_effect_2sigma": 0.071,
-          "note": "can't resolve effects < 0.071"
-        },
-        "written_at": "2026-06-26T10:47:55+00:00"
-      },
-      "created_at": "2026-06-25T22:39:20+00:00"
-    },
-    "e11": {
-      "id": "e11",
-      "question": "Is CoT pass@1 limited by the 640-token budget shared between reasoning and code? Does doubling room to 1024 (cotreal30-t1024) beat the 640-tok CoT run (cotreal30) at matched 30-step dose, n=200?",
-      "hypothesis": "CoT reasoning consumes tokens before the code block; at 640 some solutions truncate (cold rollout compile dipped to ~0.75). More room should cut truncation and raise pass@1 (arm_effect). No gain would mean 640 was already sufficient.",
-      "predicted": "arm_effect",
-      "selector": {
-        "type": "contrast",
-        "arms": {
-          "wide": {
-            "type": "point",
-            "node": "cotreal30-t1024"
-          },
-          "narrow": {
-            "type": "point",
-            "node": "cotreal30"
-          }
-        }
-      },
-      "anchor": null,
-      "resolved_nodes": [
-        "cotreal30-t1024",
-        "cotreal30"
-      ],
-      "metric": {
-        "name": "eval_passrate",
-        "n": 200
-      },
-      "decision_rule": {
-        "type": "contrast_at_tip",
-        "k_sigma": 2
-      },
-      "power_check": {
-        "eval_n": 200,
-        "sigma_at_p0.5": 0.035,
-        "min_detectable_effect_2sigma": 0.071,
-        "note": "can't resolve effects < 0.071"
-      },
-      "motivated_by": "e8",
-      "verdict": {
-        "result": "pending",
-        "finding": null,
-        "why": "arms not all complete",
-        "written_at": "2026-06-26T00:19:23+00:00"
-      },
-      "created_at": "2026-06-25T22:39:20+00:00"
-    },
-    "e12": {
-      "id": "e12",
-      "question": "Does CoT-GRPO keep raising held-out MBPP pass@1 from 90->120 cumulative steps, or has the chain plateaued? (e10 confirmed the climb to 0.615@90 but flagged a possible plateau onset; the 60->90 leg was only ~1 sigma.)",
-      "hypothesis": "If CoT has a higher ceiling than plain GRPO (which plateaued ~0.62 by 60 steps), the chain should keep climbing toward 120. Matching/regressing to ~0.615 would indicate the CoT line has reached its plateau.",
-      "predicted": "improved",
-      "selector": {
-        "type": "path",
-        "tip": "cotreal120"
-      },
-      "anchor": "base-hi",
-      "resolved_nodes": [
-        "cotreal30",
-        "cotreal60",
-        "cotreal90",
-        "cotreal120"
-      ],
-      "metric": {
-        "name": "eval_passrate",
-        "n": 200
-      },
-      "decision_rule": {
-        "type": "trend_vs_anchor",
-        "k_sigma": 2
-      },
-      "power_check": {
-        "eval_n": 200,
-        "sigma_at_p0.5": 0.035,
-        "min_detectable_effect_2sigma": 0.071,
-        "note": "can't resolve effects < 0.071"
-      },
-      "motivated_by": "e10",
-      "verdict": {
-        "result": "confirmed",
-        "finding": "improved",
-        "evidence": {
-          "trajectory": [
-            [
-              0,
-              0.45
-            ],
-            [
-              30,
-              0.5
-            ],
-            [
-              60,
-              0.575
-            ],
-            [
-              90,
-              0.615
-            ],
-            [
-              120,
-              0.615
-            ]
-          ],
-          "anchor": 0.45,
-          "best": 0.615,
-          "best_step": 90,
-          "delta_vs_anchor": 0.165,
-          "sigma": 0.034,
-          "threshold": 0.069,
-          "plateau_onset_step": 90
-        },
-        "power": {
-          "eval_n": 200,
-          "sigma_at_p0.5": 0.035,
-          "min_detectable_effect_2sigma": 0.071,
-          "note": "can't resolve effects < 0.071"
-        },
-        "written_at": "2026-06-26T10:47:55+00:00"
-      },
-      "created_at": "2026-06-26T08:52:25+00:00"
-    },
-    "e13": {
-      "id": "e13",
-      "question": "At matched 90-step dose and n=200, does CoT (cotreal90=0.615) beat, match, or lose to the plain-GRPO control grpo90-hi? (e9 found a tie at 60 steps: 0.575 vs 0.605.)",
-      "hypothesis": "If CoT has a real edge it should separate from plain GRPO as dose deepens; a tie at 90 would mean the cotreal gain over base is generic GRPO dose, not CoT-specific.",
-      "predicted": "no_arm_effect",
-      "selector": {
-        "type": "contrast",
-        "arms": {
-          "cot": {
-            "type": "point",
-            "node": "cotreal90"
-          },
-          "plain": {
-            "type": "point",
-            "node": "grpo90-hi"
-          }
-        }
-      },
-      "anchor": null,
-      "resolved_nodes": [
-        "cotreal90",
-        "grpo90-hi"
-      ],
-      "metric": {
-        "name": "eval_passrate",
-        "n": 200
-      },
-      "decision_rule": {
-        "type": "contrast_at_tip",
-        "k_sigma": 2
-      },
-      "power_check": {
-        "eval_n": 200,
-        "sigma_at_p0.5": 0.035,
-        "min_detectable_effect_2sigma": 0.071,
-        "note": "can't resolve effects < 0.071"
-      },
-      "motivated_by": "e9",
-      "verdict": {
-        "result": "inconclusive",
-        "finding": "no_arm_effect",
-        "evidence": {
-          "arm_values": {
-            "cot": 0.615,
-            "plain": 0.625
-          },
-          "diff": -0.01,
-          "pooled_sigma": 0.049,
-          "threshold": 0.097
-        },
-        "power": {
-          "eval_n": 200,
-          "sigma_at_p0.5": 0.035,
-          "min_detectable_effect_2sigma": 0.071,
-          "note": "can't resolve effects < 0.071"
-        },
-        "written_at": "2026-06-26T10:47:55+00:00"
-      },
-      "created_at": "2026-06-26T08:55:37+00:00"
-    },
-    "e14": {
-      "id": "e14",
-      "question": "At matched 120-step dose and n=200, does CoT (cotreal120) beat, match, or lose to the plain-GRPO control grpo120-hi? Tests whether either line has a higher ceiling at depth.",
-      "hypothesis": "Plain GRPO plateaued ~0.62 by 60 steps; if CoT keeps climbing to 120 it should pull ahead here, otherwise the two converge.",
-      "predicted": "no_arm_effect",
-      "selector": {
-        "type": "contrast",
-        "arms": {
-          "cot": {
-            "type": "point",
-            "node": "cotreal120"
-          },
-          "plain": {
-            "type": "point",
-            "node": "grpo120-hi"
-          }
-        }
-      },
-      "anchor": null,
-      "resolved_nodes": [
-        "cotreal120",
-        "grpo120-hi"
-      ],
-      "metric": {
-        "name": "eval_passrate",
-        "n": 200
-      },
-      "decision_rule": {
-        "type": "contrast_at_tip",
-        "k_sigma": 2
-      },
-      "power_check": {
-        "eval_n": 200,
-        "sigma_at_p0.5": 0.035,
-        "min_detectable_effect_2sigma": 0.071,
-        "note": "can't resolve effects < 0.071"
-      },
-      "motivated_by": "e9",
-      "verdict": {
-        "result": "inconclusive",
-        "finding": "no_arm_effect",
-        "evidence": {
-          "arm_values": {
-            "cot": 0.615,
-            "plain": 0.61
-          },
-          "diff": 0.005,
-          "pooled_sigma": 0.049,
-          "threshold": 0.097
-        },
-        "power": {
-          "eval_n": 200,
-          "sigma_at_p0.5": 0.035,
-          "min_detectable_effect_2sigma": 0.071,
-          "note": "can't resolve effects < 0.071"
-        },
-        "written_at": "2026-06-26T10:47:55+00:00"
-      },
-      "created_at": "2026-06-26T08:55:37+00:00"
     }
   }
 }

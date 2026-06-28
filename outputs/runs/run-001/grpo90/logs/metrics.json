@@ -1,0 +1,23 @@
+{
+  "final_reward": 0.6583333015441895,
+  "best_reward": 0.918749988079071,
+  "mean_reward": 0.6568749686082204,
+  "steps": 30,
+  "peak_vram_mb": 10739.48486328125,
+  "total_seconds": 5800.041665315628,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot90/model_checkpoint",
+  "last_breakdown": {
+    "reward": 0.35,
+    "compiles": 1.0,
+    "correctness": 0.0,
+    "style": 1.0,
+    "security": 1.0,
+    "n_tests": 3,
+    "n_passed": 0,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "eval_curve": [],
+  "eval_passrate": 0.52,
+  "eval_compile": 0.94,
+  "eval_n": 50
+}

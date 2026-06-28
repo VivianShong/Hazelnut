@@ -1,2 +1,20 @@
 [driver] running base50 (real)
 [driver] running cot30 (real)
+[driver] e1 -> INCONCLUSIVE (flat)
+[driver] no runnable queued checkpoints; done.
+[driver] running cot60 (real)
+[driver] e1 -> INCONCLUSIVE (flat)
+[driver] e2 -> CONFIRMED (improved)
+[driver] no runnable queued checkpoints; done.
+[driver] running plain60 (real)
+[driver] running cot90 (real)
+[driver] e1 -> INCONCLUSIVE (flat)
+[driver] e2 -> CONFIRMED (improved)
+[driver] e4 -> CONFIRMED (improved)
+[driver] running cot100-t256 (real)
+[driver] running cot60-lo (real)
+[driver] e1 -> INCONCLUSIVE (flat)
+[driver] e2 -> CONFIRMED (improved)
+[driver] e4 -> CONFIRMED (improved)
+[driver] e5 -> CONFIRMED (improved)
+[driver] no runnable queued checkpoints; done.

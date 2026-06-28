@@ -1,0 +1,47 @@
+Current Python version 3.10 is below the recommended 3.11 version. It is recommended to upgrade to Python 3.11 or higher for the best experience.
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<01:37,  3.26it/s]Loading weights:  12%|█▏        | 37/320 [00:00<00:02, 115.33it/s]Loading weights:  21%|██        | 66/320 [00:00<00:01, 167.91it/s]Loading weights:  30%|██▉       | 95/320 [00:00<00:01, 203.06it/s]Loading weights:  41%|████      | 130/320 [00:00<00:00, 245.34it/s]Loading weights:  50%|████▉     | 159/320 [00:00<00:00, 250.47it/s]Loading weights:  61%|██████    | 194/320 [00:00<00:00, 275.09it/s]Loading weights:  70%|███████   | 225/320 [00:01<00:00, 282.95it/s]Loading weights:  80%|███████▉  | 255/320 [00:01<00:00, 287.52it/s]Loading weights:  91%|█████████ | 291/320 [00:01<00:00, 301.31it/s]Loading weights: 100%|██████████| 320/320 [00:01<00:00, 236.70it/s]
+trainable params: 16,819,200 || all params: 1,898,644,288 || trainable%: 0.8859
+Loaded 256 training problems (source=mbpp)
+step 000 | reward 0.669 | correct 0.625 | compile 0.750 | kl 0.0000 | loss 0.0000 | 177s/11000s
+step 001 | reward 0.550 | correct 0.375 | compile 0.875 | kl 0.0006 | loss 0.0003 | 360s/11000s
+step 002 | reward 0.685 | correct 0.583 | compile 0.875 | kl 0.0011 | loss 0.0004 | 521s/11000s
+step 003 | reward 0.712 | correct 0.625 | compile 0.875 | kl 0.0039 | loss 0.0005 | 694s/11000s
+step 004 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0064 | loss 0.0001 | 859s/11000s
+step 005 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0101 | loss 0.0010 | 1020s/11000s
+step 006 | reward 0.919 | correct 0.875 | compile 1.000 | kl 0.0165 | loss 0.0010 | 1112s/11000s
+step 007 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0367 | loss 0.0020 | 1180s/11000s
+step 008 | reward 0.550 | correct 0.375 | compile 0.875 | kl 0.0268 | loss 0.0020 | 1348s/11000s
+step 009 | reward 0.431 | correct 0.125 | compile 1.000 | kl 0.0221 | loss 0.0008 | 1451s/11000s
+step 010 | reward 0.431 | correct 0.125 | compile 1.000 | kl 0.0339 | loss 0.0034 | 1581s/11000s
+step 011 | reward 0.919 | correct 0.875 | compile 1.000 | kl 0.0434 | loss 0.0024 | 1668s/11000s
+step 012 | reward 0.431 | correct 0.125 | compile 1.000 | kl 0.0397 | loss 0.0016 | 1757s/11000s
+step 013 | reward 0.512 | correct 0.250 | compile 1.000 | kl 0.0239 | loss 0.0002 | 1856s/11000s
+step 014 | reward 0.837 | correct 0.750 | compile 1.000 | kl 0.0491 | loss 0.0024 | 1914s/11000s
+step 015 | reward 0.333 | correct 0.042 | compile 0.875 | kl 0.0293 | loss 0.0024 | 2074s/11000s
+step 016 | reward 0.892 | correct 0.833 | compile 1.000 | kl 0.0344 | loss 0.0017 | 2167s/11000s
+step 017 | reward 0.512 | correct 0.250 | compile 1.000 | kl 0.0172 | loss 0.0009 | 2315s/11000s
+step 018 | reward 0.404 | correct 0.083 | compile 1.000 | kl 0.0241 | loss 0.0012 | 2460s/11000s
+step 019 | reward 0.594 | correct 0.375 | compile 1.000 | kl 0.0234 | loss 0.0012 | 2620s/11000s
+step 020 | reward 0.729 | correct 0.583 | compile 1.000 | kl 0.0540 | loss 0.0027 | 2696s/11000s
+step 021 | reward 0.371 | correct 0.167 | compile 0.750 | kl 0.0391 | loss 0.0030 | 2860s/11000s
+<candidate>:7: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+<candidate>:9: SyntaxWarning: "is" with a literal. Did you mean "=="?
+step 022 | reward 0.485 | correct 0.208 | compile 1.000 | kl 0.0785 | loss 0.0042 | 2932s/11000s
+step 023 | reward 0.512 | correct 0.250 | compile 1.000 | kl 0.0289 | loss 0.0014 | 3077s/11000s
+step 024 | reward 0.892 | correct 0.833 | compile 1.000 | kl 0.0726 | loss 0.0028 | 3140s/11000s
+step 025 | reward 0.702 | correct 0.542 | compile 1.000 | kl 0.0495 | loss 0.0012 | 3212s/11000s
+step 026 | reward 0.702 | correct 0.542 | compile 1.000 | kl 0.1681 | loss 0.0054 | 3295s/11000s
+step 027 | reward 0.729 | correct 0.583 | compile 1.000 | kl 0.0591 | loss 0.0024 | 3381s/11000s
+<candidate>:29: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+step 028 | reward 0.783 | correct 0.667 | compile 1.000 | kl 0.0549 | loss 0.0024 | 3468s/11000s
+step 029 | reward 0.837 | correct 0.750 | compile 1.000 | kl 0.0494 | loss 0.0022 | 3592s/11000s
+eval (held-out, greedy, n=200): pass@1=0.500 compile=0.980
+---
+final_reward:     0.837500
+best_reward:      0.918750
+mean_reward:      0.643819
+steps:            30
+peak_vram_mb:     10697.6
+total_seconds:    5233.2
+checkpoint:       /opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint

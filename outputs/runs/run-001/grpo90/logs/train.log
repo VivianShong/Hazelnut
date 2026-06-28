@@ -1,0 +1,45 @@
+Current Python version 3.10 is below the recommended 3.11 version. It is recommended to upgrade to Python 3.11 or higher for the best experience.
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<01:33,  3.41it/s]Loading weights:  12%|█▏        | 38/320 [00:00<00:02, 119.88it/s]Loading weights:  21%|██▏       | 68/320 [00:00<00:01, 175.59it/s]Loading weights:  31%|███       | 99/320 [00:00<00:01, 214.36it/s]Loading weights:  42%|████▏     | 134/320 [00:00<00:00, 249.81it/s]Loading weights:  53%|█████▎    | 171/320 [00:00<00:00, 279.36it/s]Loading weights:  63%|██████▎   | 202/320 [00:00<00:00, 281.49it/s]Loading weights:  74%|███████▍  | 238/320 [00:01<00:00, 299.83it/s]Loading weights:  85%|████████▌ | 273/320 [00:01<00:00, 307.37it/s]Loading weights:  95%|█████████▌| 305/320 [00:01<00:00, 309.36it/s]Loading weights: 100%|██████████| 320/320 [00:01<00:00, 245.97it/s]
+Resuming LoRA adapter from /opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60/model_checkpoint
+trainable params: 16,819,200 || all params: 1,898,644,288 || trainable%: 0.8859
+Loaded 256 training problems (source=mbpp)
+step 000 | reward 0.621 | correct 0.417 | compile 1.000 | kl 0.0496 | loss 0.0014 | 177s/11000s
+step 001 | reward 0.431 | correct 0.125 | compile 1.000 | kl 0.0354 | loss 0.0020 | 342s/11000s
+step 002 | reward 0.865 | correct 0.792 | compile 1.000 | kl 0.0357 | loss 0.0015 | 493s/11000s
+step 003 | reward 0.712 | correct 0.625 | compile 0.875 | kl 0.0297 | loss 0.0014 | 679s/11000s
+step 004 | reward 0.837 | correct 0.750 | compile 1.000 | kl 0.0342 | loss 0.0018 | 878s/11000s
+step 005 | reward 0.794 | correct 0.750 | compile 0.875 | kl 0.0244 | loss 0.0013 | 1065s/11000s
+step 006 | reward 0.702 | correct 0.542 | compile 1.000 | kl 0.0249 | loss 0.0016 | 1237s/11000s
+step 007 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0254 | loss 0.0012 | 1413s/11000s
+step 008 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0262 | loss 0.0011 | 1590s/11000s
+step 009 | reward 0.729 | correct 0.583 | compile 1.000 | kl 0.0200 | loss 0.0009 | 1766s/11000s
+step 010 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0359 | loss 0.0019 | 1953s/11000s
+step 011 | reward 0.810 | correct 0.708 | compile 1.000 | kl 0.0345 | loss 0.0012 | 2124s/11000s
+step 012 | reward 0.675 | correct 0.500 | compile 1.000 | kl 0.0265 | loss 0.0015 | 2318s/11000s
+step 013 | reward 0.512 | correct 0.250 | compile 1.000 | kl 0.0202 | loss 0.0004 | 2486s/11000s
+step 014 | reward 0.756 | correct 0.625 | compile 1.000 | kl 0.0375 | loss 0.0011 | 2622s/11000s
+step 015 | reward 0.256 | correct 0.125 | compile 0.500 | kl 0.0223 | loss 0.0014 | 2809s/11000s
+step 016 | reward 0.767 | correct 0.708 | compile 0.875 | kl 0.0207 | loss 0.0006 | 2988s/11000s
+step 017 | reward 0.631 | correct 0.500 | compile 0.875 | kl 0.0198 | loss 0.0011 | 3172s/11000s
+step 018 | reward 0.377 | correct 0.042 | compile 1.000 | kl 0.0197 | loss 0.0006 | 3355s/11000s
+step 019 | reward 0.496 | correct 0.292 | compile 0.875 | kl 0.0239 | loss 0.0010 | 3546s/11000s
+step 020 | reward 0.783 | correct 0.667 | compile 1.000 | kl 0.0313 | loss 0.0010 | 3686s/11000s
+step 021 | reward 0.506 | correct 0.375 | compile 0.750 | kl 0.0180 | loss 0.0014 | 3857s/11000s
+step 022 | reward 0.594 | correct 0.375 | compile 1.000 | kl 0.0297 | loss 0.0015 | 3994s/11000s
+step 023 | reward 0.594 | correct 0.375 | compile 1.000 | kl 0.0346 | loss 0.0009 | 4164s/11000s
+step 024 | reward 0.919 | correct 0.875 | compile 1.000 | kl 0.0266 | loss 0.0014 | 4308s/11000s
+step 025 | reward 0.919 | correct 0.875 | compile 1.000 | kl 0.0249 | loss 0.0009 | 4479s/11000s
+step 026 | reward 0.621 | correct 0.417 | compile 1.000 | kl 0.0362 | loss 0.0005 | 4602s/11000s
+step 027 | reward 0.587 | correct 0.500 | compile 0.750 | kl 0.0285 | loss 0.0012 | 4772s/11000s
+step 028 | reward 0.446 | correct 0.417 | compile 0.500 | kl 0.0251 | loss 0.0011 | 4941s/11000s
+step 029 | reward 0.658 | correct 0.542 | compile 0.875 | kl 0.0230 | loss 0.0009 | 5117s/11000s
+eval (held-out, greedy, n=50): pass@1=0.520 compile=0.940
+---
+final_reward:     0.658333
+best_reward:      0.918750
+mean_reward:      0.656875
+steps:            30
+peak_vram_mb:     10739.5
+total_seconds:    5800.0
+checkpoint:       /opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot90/model_checkpoint

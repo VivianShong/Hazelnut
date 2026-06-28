@@ -1,0 +1,15 @@
+Current Python version 3.10 is below the recommended 3.11 version. It is recommended to upgrade to Python 3.11 or higher for the best experience.
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<01:29,  3.57it/s]Loading weights:  12%|█▎        | 40/320 [00:00<00:02, 132.01it/s]Loading weights:  23%|██▎       | 75/320 [00:00<00:01, 199.61it/s]Loading weights:  32%|███▎      | 104/320 [00:00<00:00, 226.80it/s]Loading weights:  43%|████▎     | 138/320 [00:00<00:00, 260.76it/s]Loading weights:  54%|█████▍    | 173/320 [00:00<00:00, 282.79it/s]Loading weights:  64%|██████▍   | 206/320 [00:00<00:00, 290.95it/s]Loading weights:  78%|███████▊  | 248/320 [00:01<00:00, 326.75it/s]Loading weights:  88%|████████▊ | 283/320 [00:01<00:00, 328.74it/s]Loading weights:  99%|█████████▉| 317/320 [00:01<00:00, 322.11it/s]Loading weights: 100%|██████████| 320/320 [00:01<00:00, 260.50it/s]
+Resuming LoRA adapter from /opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint
+trainable params: 16,819,200 || all params: 1,898,644,288 || trainable%: 0.8859
+Loaded 256 training problems (source=mbpp)
+eval (held-out, greedy, n=200): pass@1=0.625 compile=0.995
+---
+final_reward:     0.000000
+best_reward:      0.000000
+mean_reward:      0.000000
+steps:            0
+peak_vram_mb:     4176.7
+total_seconds:    1165.9
+checkpoint:       /opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint

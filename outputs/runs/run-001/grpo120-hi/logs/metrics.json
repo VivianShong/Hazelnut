@@ -1,0 +1,14 @@
+{
+  "final_reward": 0.0,
+  "best_reward": 0.0,
+  "mean_reward": 0.0,
+  "steps": 0,
+  "peak_vram_mb": 4176.71240234375,
+  "total_seconds": 1661.3044679164886,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint",
+  "last_breakdown": null,
+  "eval_curve": [],
+  "eval_passrate": 0.61,
+  "eval_compile": 0.975,
+  "eval_n": 200
+}

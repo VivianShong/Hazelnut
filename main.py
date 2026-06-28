@@ -14,6 +14,7 @@
 
 import contextlib
 import json
+import os
 import shutil
 import stat
 import subprocess
@@ -126,25 +127,63 @@ def start_dashboard() -> subprocess.Popen:
     return proc
 
 
-if __name__ == "__main__":
-    reset_state()
-    install_skill()
-    dashboard = start_dashboard()
+def launch(*, mode: str, prompt: str = PROMPT) -> None:
+    """Launch the Copilot research loop.
+
+    mode="run"  — the full autonomous loop: reset only if REPURRR_RESET=1, start
+        the live dashboard, run Copilot in --autopilot/--allow-all.
+
+    mode="demo" — cold-open for recording. Injects the same prompt into Copilot so
+        the agent visibly spins up, but is engineered to NOT interfere with the
+        experiments already running:
+          • never resets the ledger/tree,
+          • does NOT start a second dashboard (reuse the one already on :8765),
+          • runs Copilot interactively WITHOUT --autopilot/--allow-all, so the
+            agent cannot autonomously write the ledger or queue checkpoints the
+            driver would pick up — every mutating action would need your approval.
+        Purely cosmetic: nothing the current run depends on is touched.
+    """
+    demo = mode == "demo"
+
+    if not demo and os.environ.get("REPURRR_RESET") == "1":
+        reset_state()
+    else:
+        print("reset DISABLED: preserving current ledger.json and tree.json")
+
+    install_skill()  # only touches ~/.copilot/skills; never the ledger/run data
+    dashboard = None if demo else start_dashboard()
+
+    cmd = ["copilot", "-C", REPO]            # run in-repo so the repur skill auto-loads
+    if not demo:
+        cmd += ["--allow-all", "--autopilot"]  # autonomous, approve-all (run mode only)
+    cmd += ["-i", prompt]                     # inject the prompt
+    print(f"injecting prompt: {prompt!r}")
+
+    if demo:
+        print("DEMO MODE: interactive cold-open. The agent will NOT auto-modify the "
+              "ledger or driver — approve no tool calls to keep the running "
+              "experiments untouched. (Dashboard reused on :8765; no reset.)")
+
     try:
-        subprocess.run(
-            [
-                "copilot",
-                "-C", REPO,          # run inside the repo so the repur skill auto-loads
-                "--allow-all",       # approve-all: no confirmation prompts (tools/shell/paths/urls)
-                "--autopilot",       # autonomous execution mode
-                "-i", PROMPT,        # interactive: auto-execute the prompt, then keep the loop running
-            ],
-            cwd=REPO,
-        )
+        subprocess.run(cmd, cwd=REPO)
     finally:
-        # Tear down the dashboard when the CLI session ends.
-        dashboard.terminate()
-        try:
-            dashboard.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            dashboard.kill()
+        if dashboard is not None:
+            # Tear down the dashboard we started (run mode only).
+            dashboard.terminate()
+            try:
+                dashboard.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                dashboard.kill()
+
+
+if __name__ == "__main__":
+    import argparse
+
+    ap = argparse.ArgumentParser(description="Launch the Repurrr Copilot research loop.")
+    ap.add_argument("mode", nargs="?", choices=["run", "demo"], default="run",
+                    help="run: full autonomous loop (reset only if REPURRR_RESET=1); "
+                         "demo: cold-open visual only, does not touch running experiments")
+    ap.add_argument("-p", "--prompt", default=PROMPT,
+                    help="custom prompt to inject into Copilot (default: the built-in goal prompt)")
+    args = ap.parse_args()
+    launch(mode=args.mode, prompt=args.prompt)
