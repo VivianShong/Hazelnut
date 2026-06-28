@@ -1,0 +1,23 @@
+{
+  "final_reward": 0.8374999761581421,
+  "best_reward": 0.918749988079071,
+  "mean_reward": 0.6438194235165914,
+  "steps": 30,
+  "peak_vram_mb": 10697.60400390625,
+  "total_seconds": 5233.2012667655945,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint",
+  "last_breakdown": {
+    "reward": 1.0,
+    "compiles": 1.0,
+    "correctness": 1.0,
+    "style": 1.0,
+    "security": 1.0,
+    "n_tests": 3,
+    "n_passed": 3,
+    "error": null
+  },
+  "eval_curve": [],
+  "eval_passrate": 0.5,
+  "eval_compile": 0.98,
+  "eval_n": 200
+}

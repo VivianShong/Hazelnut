@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Models / datasets (large; fetched locally, not versioned)
+models/
+data/
+
+# GRPO training artifacts: LoRA adapters are large + regenerable -> gitignored.
+# Everything else under outputs/ (ledger.json, tree.json, logs/) is committed.
+outputs/runs/*/*/model_checkpoint/
+outputs/backups/
+
+# Per-run driver lock + atomic-write temp files
+outputs/runs/*/tree.json.lock
+*.tmp
+
+# Agent prompt files (generated per-session by launchers)
+CLAUDE.md
+AGENTS.md

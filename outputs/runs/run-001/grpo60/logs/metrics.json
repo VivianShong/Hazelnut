@@ -1,0 +1,23 @@
+{
+  "final_reward": 0.875,
+  "best_reward": 0.9729166626930237,
+  "mean_reward": 0.671458308895429,
+  "steps": 30,
+  "peak_vram_mb": 10697.60400390625,
+  "total_seconds": 5472.641374826431,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot60/model_checkpoint",
+  "last_breakdown": {
+    "reward": 0.0,
+    "compiles": 0.0,
+    "correctness": 0.0,
+    "style": 0.0,
+    "security": 0.0,
+    "n_tests": 0,
+    "n_passed": 0,
+    "error": "does not compile"
+  },
+  "eval_curve": [],
+  "eval_passrate": 0.62,
+  "eval_compile": 0.98,
+  "eval_n": 50
+}

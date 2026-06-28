@@ -1,0 +1,23 @@
+{
+  "final_reward": 0.6749999523162842,
+  "best_reward": 1.0,
+  "mean_reward": 0.6845138569672903,
+  "steps": 30,
+  "peak_vram_mb": 10600.6923828125,
+  "total_seconds": 3748.20392203331,
+  "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cot120/model_checkpoint",
+  "last_breakdown": {
+    "reward": 0.35,
+    "compiles": 1.0,
+    "correctness": 0.0,
+    "style": 1.0,
+    "security": 1.0,
+    "n_tests": 3,
+    "n_passed": 0,
+    "error": "exec failed: 'dict_keys' object is not subscriptable"
+  },
+  "eval_curve": [],
+  "eval_passrate": 0.62,
+  "eval_compile": 1.0,
+  "eval_n": 50
+}

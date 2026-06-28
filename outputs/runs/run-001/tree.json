@@ -1,0 +1,612 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "task": "grpo-qwen3.5-2b-code",
+    "run": "run-001",
+    "root_id": "base50",
+    "updated_at": "2026-06-26T10:47:55+00:00"
+  },
+  "nodes": {
+    "base50": {
+      "id": "base50",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 50,
+        "max_new_tokens": 640,
+        "eval_batch": 8
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4111.9677734375,
+        "total_seconds": 701.094217300415,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.46,
+        "eval_compile": 0.86,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/base50/logs/train.log"
+      }
+    },
+    "grpo30": {
+      "id": "grpo30",
+      "parent": "base50",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {
+        "final_reward": 0.7562499642372131,
+        "best_reward": 0.8479166626930237,
+        "mean_reward": 0.598749981323878,
+        "steps": 30,
+        "peak_vram_mb": 10740.68212890625,
+        "total_seconds": 5843.593190670013,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo30/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "AssertionError: "
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.5,
+        "eval_compile": 0.94,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo30/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo30/logs/train.log"
+      }
+    },
+    "grpo60": {
+      "id": "grpo60",
+      "parent": "grpo30",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {
+        "final_reward": 0.875,
+        "best_reward": 0.9729166626930237,
+        "mean_reward": 0.671458308895429,
+        "steps": 30,
+        "peak_vram_mb": 10697.60400390625,
+        "total_seconds": 5472.641374826431,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.62,
+        "eval_compile": 0.98,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo60/logs/train.log"
+      }
+    },
+    "plain60": {
+      "id": "plain60",
+      "parent": null,
+      "status": "failed",
+      "config": {
+        "train_steps": 60,
+        "note": "abandoned control"
+      },
+      "metrics": {
+        "error": "abandoned: no-CoT control not needed; goal is CoT emergence on fresh base, not dose attribution"
+      },
+      "checkpoint": null,
+      "run": {
+        "log_path": "outputs/runs/run-001/plain60/logs/train.log"
+      }
+    },
+    "grpo90": {
+      "id": "grpo90",
+      "parent": "grpo60",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.6583333015441895,
+        "best_reward": 0.918749988079071,
+        "mean_reward": 0.6568749686082204,
+        "steps": 30,
+        "peak_vram_mb": 10739.48486328125,
+        "total_seconds": 5800.041665315628,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "ValueError: too many values to unpack (expected 2)"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.52,
+        "eval_compile": 0.94,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo90/logs/train.log"
+      }
+    },
+    "grpo100-t256": {
+      "id": "grpo100-t256",
+      "parent": "grpo90",
+      "status": "failed",
+      "config": {
+        "train_steps": 10,
+        "note": "abandoned: max_new_tokens=256 truncates CoT; parent cot90 regressed; unregistered"
+      },
+      "metrics": {
+        "error": "abandoned: unsound config (256-tok CoT truncation) from regressed parent, no registered experiment"
+      },
+      "checkpoint": null,
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo100-t256/logs/train.log"
+      }
+    },
+    "grpo60-lo": {
+      "id": "grpo60-lo",
+      "parent": "grpo60",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 2.5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.918749988079071,
+        "best_reward": 1.0,
+        "mean_reward": 0.6726388663053513,
+        "steps": 30,
+        "peak_vram_mb": 10695.8134765625,
+        "total_seconds": 5760.6158356666565,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-lo/model_checkpoint",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.56,
+        "eval_compile": 1.0,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-lo/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo60-lo/logs/train.log"
+      }
+    },
+    "grpo120": {
+      "id": "grpo120",
+      "parent": "grpo90",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {
+        "final_reward": 0.6749999523162842,
+        "best_reward": 1.0,
+        "mean_reward": 0.6845138569672903,
+        "steps": 30,
+        "peak_vram_mb": 10600.6923828125,
+        "total_seconds": 3748.20392203331,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "exec failed: 'dict_keys' object is not subscriptable"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.62,
+        "eval_compile": 1.0,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo120/logs/train.log"
+      }
+    },
+    "base-hi": {
+      "id": "base-hi",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1810.4126813411713,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.45,
+        "eval_compile": 0.97,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base-hi/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/base-hi/logs/train.log"
+      }
+    },
+    "grpo60-hi": {
+      "id": "grpo60-hi",
+      "parent": "grpo60",
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1409.9160151481628,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.605,
+        "eval_compile": 0.995,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-hi/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo60-hi/logs/train.log"
+      }
+    },
+    "cotreal30": {
+      "id": "cotreal30",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.8374999761581421,
+        "best_reward": 0.918749988079071,
+        "mean_reward": 0.6438194235165914,
+        "steps": 30,
+        "peak_vram_mb": 10697.60400390625,
+        "total_seconds": 5233.2012667655945,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.5,
+        "eval_compile": 0.98,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/cotreal30/logs/train.log"
+      }
+    },
+    "cotreal60": {
+      "id": "cotreal60",
+      "parent": "cotreal30",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.5937499403953552,
+        "best_reward": 1.0,
+        "mean_reward": 0.6572221994400025,
+        "steps": 30,
+        "peak_vram_mb": 10723.56689453125,
+        "total_seconds": 5494.299064159393,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal60/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "AssertionError: "
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.575,
+        "eval_compile": 0.96,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal60/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/cotreal60/logs/train.log"
+      }
+    },
+    "cotreal90": {
+      "id": "cotreal90",
+      "parent": "cotreal60",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.512499988079071,
+        "best_reward": 1.0,
+        "mean_reward": 0.7070833106835683,
+        "steps": 30,
+        "peak_vram_mb": 10661.34912109375,
+        "total_seconds": 3337.6682126522064,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "IndexError: list index out of range"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.615,
+        "eval_compile": 0.955,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/cotreal90/logs/train.log"
+      }
+    },
+    "cotreal30-t1024": {
+      "id": "cotreal30-t1024",
+      "parent": null,
+      "status": "failed",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 1024,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 12000
+      },
+      "metrics": {
+        "error": "Command '['uv', 'run', 'python', '-u', 'grpo.py', '--output-dir', '/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30-t1024', '--train-steps', '30', '--lr', '5e-05', '--kl-coeff', '0.04', '--num-prompts', '2', '--group-size', '4', '--temperature', '0.9', '--max-new-tokens', '1024', '--eval-n', '200', '--eval-batch', '8', '--time-budget', '12000']' returned non-zero exit status 1."
+      },
+      "checkpoint": null,
+      "run": {
+        "log_path": "outputs/runs/run-001/cotreal30-t1024/logs/train.log"
+      }
+    },
+    "cotreal120": {
+      "id": "cotreal120",
+      "parent": "cotreal90",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.59375,
+        "best_reward": 1.0,
+        "mean_reward": 0.7072916408379872,
+        "steps": 30,
+        "peak_vram_mb": 10515.99462890625,
+        "total_seconds": 3661.1944069862366,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal120/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "AssertionError: "
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.615,
+        "eval_compile": 0.965,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal120/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/cotreal120/logs/train.log"
+      }
+    },
+    "grpo90-hi": {
+      "id": "grpo90-hi",
+      "parent": "grpo90",
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1165.906075000763,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.625,
+        "eval_compile": 0.995,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo90-hi/logs/train.log"
+      }
+    },
+    "grpo120-hi": {
+      "id": "grpo120-hi",
+      "parent": "grpo120",
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1661.3044679164886,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.61,
+        "eval_compile": 0.975,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint",
+      "run": {
+        "log_path": "outputs/runs/run-001/grpo120-hi/logs/train.log"
+      }
+    }
+  }
+}

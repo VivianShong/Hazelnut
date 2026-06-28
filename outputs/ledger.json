@@ -1,0 +1,1464 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "headline": "inquiry-DAG over a checkpoint substrate",
+    "goal": "improve Qwen3.5-2B-base's pass rate on MBPP dataset",
+    "updated_at": "2026-06-26T10:47:55+00:00"
+  },
+  "checkpoints": {
+    "base50": {
+      "id": "base50",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 50,
+        "max_new_tokens": 640,
+        "eval_batch": 8
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4111.9677734375,
+        "total_seconds": 701.094217300415,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.46,
+        "eval_compile": 0.86,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base50/model_checkpoint"
+    },
+    "grpo30": {
+      "id": "grpo30",
+      "parent": "base50",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {
+        "final_reward": 0.7562499642372131,
+        "best_reward": 0.8479166626930237,
+        "mean_reward": 0.598749981323878,
+        "steps": 30,
+        "peak_vram_mb": 10740.68212890625,
+        "total_seconds": 5843.593190670013,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo30/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "AssertionError: "
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.5,
+        "eval_compile": 0.94,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo30/model_checkpoint"
+    },
+    "grpo60": {
+      "id": "grpo60",
+      "parent": "grpo30",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {
+        "final_reward": 0.875,
+        "best_reward": 0.9729166626930237,
+        "mean_reward": 0.671458308895429,
+        "steps": 30,
+        "peak_vram_mb": 10697.60400390625,
+        "total_seconds": 5472.641374826431,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.0,
+          "compiles": 0.0,
+          "correctness": 0.0,
+          "style": 0.0,
+          "security": 0.0,
+          "n_tests": 0,
+          "n_passed": 0,
+          "error": "does not compile"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.62,
+        "eval_compile": 0.98,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60/model_checkpoint"
+    },
+    "plain60": {
+      "id": "plain60",
+      "parent": null,
+      "status": "failed",
+      "config": {
+        "train_steps": 60,
+        "note": "abandoned control"
+      },
+      "metrics": {
+        "error": "abandoned: no-CoT control not needed; goal is CoT emergence on fresh base, not dose attribution"
+      },
+      "checkpoint": null
+    },
+    "grpo90": {
+      "id": "grpo90",
+      "parent": "grpo60",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.6583333015441895,
+        "best_reward": 0.918749988079071,
+        "mean_reward": 0.6568749686082204,
+        "steps": 30,
+        "peak_vram_mb": 10739.48486328125,
+        "total_seconds": 5800.041665315628,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "ValueError: too many values to unpack (expected 2)"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.52,
+        "eval_compile": 0.94,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90/model_checkpoint"
+    },
+    "grpo100-t256": {
+      "id": "grpo100-t256",
+      "parent": "grpo90",
+      "status": "failed",
+      "config": {
+        "train_steps": 10,
+        "note": "abandoned: max_new_tokens=256 truncates CoT; parent cot90 regressed; unregistered"
+      },
+      "metrics": {
+        "error": "abandoned: unsound config (256-tok CoT truncation) from regressed parent, no registered experiment"
+      },
+      "checkpoint": null
+    },
+    "grpo60-lo": {
+      "id": "grpo60-lo",
+      "parent": "grpo60",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 2.5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.918749988079071,
+        "best_reward": 1.0,
+        "mean_reward": 0.6726388663053513,
+        "steps": 30,
+        "peak_vram_mb": 10695.8134765625,
+        "total_seconds": 5760.6158356666565,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-lo/model_checkpoint",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.56,
+        "eval_compile": 1.0,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-lo/model_checkpoint"
+    },
+    "grpo120": {
+      "id": "grpo120",
+      "parent": "grpo90",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 50,
+        "eval_batch": 8,
+        "time_budget": 9000
+      },
+      "metrics": {
+        "final_reward": 0.6749999523162842,
+        "best_reward": 1.0,
+        "mean_reward": 0.6845138569672903,
+        "steps": 30,
+        "peak_vram_mb": 10600.6923828125,
+        "total_seconds": 3748.20392203331,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "exec failed: 'dict_keys' object is not subscriptable"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.62,
+        "eval_compile": 1.0,
+        "eval_n": 50
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120/model_checkpoint"
+    },
+    "base-hi": {
+      "id": "base-hi",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1810.4126813411713,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.45,
+        "eval_compile": 0.97,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/base-hi/model_checkpoint"
+    },
+    "grpo60-hi": {
+      "id": "grpo60-hi",
+      "parent": "grpo60",
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1409.9160151481628,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.605,
+        "eval_compile": 0.995,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo60-hi/model_checkpoint"
+    },
+    "cotreal30": {
+      "id": "cotreal30",
+      "parent": null,
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.8374999761581421,
+        "best_reward": 0.918749988079071,
+        "mean_reward": 0.6438194235165914,
+        "steps": 30,
+        "peak_vram_mb": 10697.60400390625,
+        "total_seconds": 5233.2012667655945,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint",
+        "last_breakdown": {
+          "reward": 1.0,
+          "compiles": 1.0,
+          "correctness": 1.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 3,
+          "error": null
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.5,
+        "eval_compile": 0.98,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30/model_checkpoint"
+    },
+    "cotreal60": {
+      "id": "cotreal60",
+      "parent": "cotreal30",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.5937499403953552,
+        "best_reward": 1.0,
+        "mean_reward": 0.6572221994400025,
+        "steps": 30,
+        "peak_vram_mb": 10723.56689453125,
+        "total_seconds": 5494.299064159393,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal60/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "AssertionError: "
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.575,
+        "eval_compile": 0.96,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal60/model_checkpoint"
+    },
+    "cotreal90": {
+      "id": "cotreal90",
+      "parent": "cotreal60",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.512499988079071,
+        "best_reward": 1.0,
+        "mean_reward": 0.7070833106835683,
+        "steps": 30,
+        "peak_vram_mb": 10661.34912109375,
+        "total_seconds": 3337.6682126522064,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "IndexError: list index out of range"
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.615,
+        "eval_compile": 0.955,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal90/model_checkpoint"
+    },
+    "cotreal30-t1024": {
+      "id": "cotreal30-t1024",
+      "parent": null,
+      "status": "failed",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 1024,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 12000
+      },
+      "metrics": {
+        "error": "Command '['uv', 'run', 'python', '-u', 'grpo.py', '--output-dir', '/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal30-t1024', '--train-steps', '30', '--lr', '5e-05', '--kl-coeff', '0.04', '--num-prompts', '2', '--group-size', '4', '--temperature', '0.9', '--max-new-tokens', '1024', '--eval-n', '200', '--eval-batch', '8', '--time-budget', '12000']' returned non-zero exit status 1."
+      },
+      "checkpoint": null
+    },
+    "cotreal120": {
+      "id": "cotreal120",
+      "parent": "cotreal90",
+      "status": "done",
+      "config": {
+        "train_steps": 30,
+        "lr": 5e-05,
+        "kl_coeff": 0.04,
+        "num_prompts": 2,
+        "group_size": 4,
+        "temperature": 0.9,
+        "max_new_tokens": 640,
+        "eval_n": 200,
+        "eval_batch": 8,
+        "time_budget": 11000
+      },
+      "metrics": {
+        "final_reward": 0.59375,
+        "best_reward": 1.0,
+        "mean_reward": 0.7072916408379872,
+        "steps": 30,
+        "peak_vram_mb": 10515.99462890625,
+        "total_seconds": 3661.1944069862366,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal120/model_checkpoint",
+        "last_breakdown": {
+          "reward": 0.35,
+          "compiles": 1.0,
+          "correctness": 0.0,
+          "style": 1.0,
+          "security": 1.0,
+          "n_tests": 3,
+          "n_passed": 0,
+          "error": "AssertionError: "
+        },
+        "eval_curve": [],
+        "eval_passrate": 0.615,
+        "eval_compile": 0.965,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/cotreal120/model_checkpoint"
+    },
+    "grpo90-hi": {
+      "id": "grpo90-hi",
+      "parent": "grpo90",
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1165.906075000763,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.625,
+        "eval_compile": 0.995,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo90-hi/model_checkpoint"
+    },
+    "grpo120-hi": {
+      "id": "grpo120-hi",
+      "parent": "grpo120",
+      "status": "done",
+      "config": {
+        "train_steps": 0,
+        "eval_n": 200,
+        "max_new_tokens": 640,
+        "eval_batch": 8,
+        "time_budget": 6000
+      },
+      "metrics": {
+        "final_reward": 0.0,
+        "best_reward": 0.0,
+        "mean_reward": 0.0,
+        "steps": 0,
+        "peak_vram_mb": 4176.71240234375,
+        "total_seconds": 1661.3044679164886,
+        "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint",
+        "last_breakdown": null,
+        "eval_curve": [],
+        "eval_passrate": 0.61,
+        "eval_compile": 0.975,
+        "eval_n": 200
+      },
+      "checkpoint": "/opt/Hazelnut/worktrees/refactor/outputs/runs/run-001/grpo120-hi/model_checkpoint"
+    }
+  },
+  "experiments": {
+    "e1": {
+      "id": "e1",
+      "question": "Does GRPO training with chain-of-thought prompts raise held-out MBPP pass@1 above the untrained base, with the CoT prompt held constant at eval?",
+      "hypothesis": "Reinforcing CoT-prefixed generations that yield correct code (GRPO_COT=1) teaches Qwen3.5-2B-base to reason-then-code, improving greedy pass@1 over the base anchor evaluated under the same CoT prompt.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "grpo30"
+      },
+      "anchor": "base50",
+      "resolved_nodes": [
+        "base50",
+        "grpo30"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": null,
+      "verdict": {
+        "result": "inconclusive",
+        "finding": "flat",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.46
+            ],
+            [
+              0,
+              0.46
+            ],
+            [
+              30,
+              0.5
+            ]
+          ],
+          "anchor": 0.46,
+          "best": 0.5,
+          "best_step": 30,
+          "delta_vs_anchor": 0.04,
+          "sigma": 0.071,
+          "threshold": 0.141,
+          "plateau_onset_step": 0
+        },
+        "power": {
+          "eval_n": 50,
+          "sigma_at_p0.5": 0.071,
+          "min_detectable_effect_2sigma": 0.141,
+          "note": "can't resolve effects < 0.141"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T08:22:08+00:00"
+    },
+    "e2": {
+      "id": "e2",
+      "question": "Does additional CoT-prompted GRPO dose (60 vs 0 cumulative steps) move held-out MBPP pass@1 above base, once KL is in the active regime?",
+      "hypothesis": "cot30 was under-dosed (KL only ~0.016, pass@1 +0.04 flat). Continuing 30 more CoT steps (carrying optimizer) pushes KL into the 0.04-0.07 active regime where exp2 saw pass@1 move, lifting the deeper chain above base.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "grpo60"
+      },
+      "anchor": "base50",
+      "resolved_nodes": [
+        "base50",
+        "grpo30",
+        "grpo60"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": "e1",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "improved",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.46
+            ],
+            [
+              0,
+              0.46
+            ],
+            [
+              30,
+              0.5
+            ],
+            [
+              60,
+              0.62
+            ]
+          ],
+          "anchor": 0.46,
+          "best": 0.62,
+          "best_step": 60,
+          "delta_vs_anchor": 0.16,
+          "sigma": 0.069,
+          "threshold": 0.137,
+          "plateau_onset_step": 60
+        },
+        "power": {
+          "eval_n": 50,
+          "sigma_at_p0.5": 0.071,
+          "min_detectable_effect_2sigma": 0.141,
+          "note": "can't resolve effects < 0.141"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T10:19:22+00:00"
+    },
+    "e3": {
+      "id": "e3",
+      "question": "Is the +0.16 pass@1 gain attributable to chain-of-thought specifically, or to generic GRPO dose? Contrast the CoT pipeline (cot60) vs a matched 60-step plain (no-CoT) pipeline (plain60) at the tip.",
+      "hypothesis": "PROGRESS Exp2 shows plain lr=5e-5 GRPO also plateaus at ~0.62 pass@1, and cot60 also landed at 0.62. So CoT prompting adds no pass@1 beyond the training dose: the two arms will fall within noise (no_arm_effect).",
+      "predicted": "no_arm_effect",
+      "selector": {
+        "type": "contrast",
+        "arms": {
+          "cot": {
+            "type": "point",
+            "node": "grpo60"
+          },
+          "plain": {
+            "type": "point",
+            "node": "plain60"
+          }
+        }
+      },
+      "anchor": null,
+      "resolved_nodes": [
+        "grpo60",
+        "plain60"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "contrast_at_tip",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": "e2",
+      "verdict": {
+        "result": "pending",
+        "finding": null,
+        "why": "arms not all complete",
+        "written_at": "2026-06-26T00:19:23+00:00"
+      },
+      "created_at": "2026-06-25T12:47:17+00:00"
+    },
+    "e4": {
+      "id": "e4",
+      "question": "Does deepening CoT-prompted GRPO to 90 cumulative steps continue to raise held-out MBPP pass@1, or has CoT-emergence plateaued after 60 steps?",
+      "hypothesis": "e2 showed the CoT chain still climbing at step 60 (0.50->0.62, no plateau detected). Continuing 30 more CoT steps (optimizer carried) should push pass@1 further above base as reasoning-then-coding consolidates; if it flattens, 60 steps is the emergence plateau.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "grpo90"
+      },
+      "anchor": "base50",
+      "resolved_nodes": [
+        "base50",
+        "grpo30",
+        "grpo60",
+        "grpo90"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": "e2",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "improved",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.46
+            ],
+            [
+              0,
+              0.46
+            ],
+            [
+              30,
+              0.5
+            ],
+            [
+              60,
+              0.62
+            ],
+            [
+              90,
+              0.52
+            ]
+          ],
+          "anchor": 0.46,
+          "best": 0.62,
+          "best_step": 60,
+          "delta_vs_anchor": 0.16,
+          "sigma": 0.069,
+          "threshold": 0.137,
+          "plateau_onset_step": 60
+        },
+        "power": {
+          "eval_n": 50,
+          "sigma_at_p0.5": 0.071,
+          "min_detectable_effect_2sigma": 0.141,
+          "note": "can't resolve effects < 0.141"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T12:50:29+00:00"
+    },
+    "e5": {
+      "id": "e5",
+      "question": "cot90 (continue at lr5e-5) regressed 0.62->0.52. Was that aggressive over-training past the plateau? Does a gentler continuation from cot60 at half lr (2.5e-5) push CoT emergence past the 0.62 frontier instead of regressing?",
+      "hypothesis": "The cot90 drop suggests lr5e-5 over-shoots once near the plateau (KL drift on tiny num_prompts=2 batches). Halving lr from the cot60 checkpoint should consolidate the reasoning-then-code behavior and lift pass@1 above 0.62, or at worst hold it (not regress like cot90).",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "grpo60-lo"
+      },
+      "anchor": "base50",
+      "resolved_nodes": [
+        "base50",
+        "grpo30",
+        "grpo60",
+        "grpo60-lo"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": "e4",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "improved",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.46
+            ],
+            [
+              0,
+              0.46
+            ],
+            [
+              30,
+              0.5
+            ],
+            [
+              60,
+              0.62
+            ],
+            [
+              90,
+              0.56
+            ]
+          ],
+          "anchor": 0.46,
+          "best": 0.62,
+          "best_step": 60,
+          "delta_vs_anchor": 0.16,
+          "sigma": 0.069,
+          "threshold": 0.137,
+          "plateau_onset_step": 60
+        },
+        "power": {
+          "eval_n": 50,
+          "sigma_at_p0.5": 0.071,
+          "min_detectable_effect_2sigma": 0.141,
+          "note": "can't resolve effects < 0.141"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T14:31:29+00:00"
+    },
+    "e6": {
+      "id": "e6",
+      "question": "Was the cot90 eval dip (0.62->0.52) measurement noise? Does continuing to 120 cumulative steps recover or exceed the 0.62 frontier?",
+      "hypothesis": "cot90 training signals show no deterioration (KL stable ~0.027, loss flat, compile ~0.90). The eval drop is within 1.5\u03c3 of cot60 (\u03c3\u22480.07) and likely noise. 30 more steps from cot90 should recover toward or above 0.62.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "grpo120"
+      },
+      "anchor": "base50",
+      "resolved_nodes": [
+        "base50",
+        "grpo30",
+        "grpo60",
+        "grpo90",
+        "grpo120"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 50
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 50,
+        "sigma_at_p0.5": 0.071,
+        "min_detectable_effect_2sigma": 0.141,
+        "note": "can't resolve effects < 0.141"
+      },
+      "motivated_by": "e4",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "improved",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.46
+            ],
+            [
+              0,
+              0.46
+            ],
+            [
+              30,
+              0.5
+            ],
+            [
+              60,
+              0.62
+            ],
+            [
+              90,
+              0.52
+            ],
+            [
+              120,
+              0.62
+            ]
+          ],
+          "anchor": 0.46,
+          "best": 0.62,
+          "best_step": 60,
+          "delta_vs_anchor": 0.16,
+          "sigma": 0.069,
+          "threshold": 0.137,
+          "plateau_onset_step": 60
+        },
+        "power": {
+          "eval_n": 50,
+          "sigma_at_p0.5": 0.071,
+          "min_detectable_effect_2sigma": 0.141,
+          "note": "can't resolve effects < 0.141"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T19:18:47+00:00"
+    },
+    "e7": {
+      "id": "e7",
+      "question": "Does the headline CoT-GRPO gain (cot60 +0.16 over base) survive at 4x eval resolution (n=200, a superset of the original 50), where the 2-sigma MDE drops from 0.137 to ~0.069 - or was it a 50-sample artifact?",
+      "hypothesis": "Every prior verdict carries 'can't resolve effects < 0.141', and the whole frontier (0.52-0.62) sits within +/-1 sigma at n=50. Re-scoring base and cot60 (eval-only, train_steps=0) on a fixed 200-problem held-out slice should keep cot60 ~0.15 above base at >2 sigma, confirming the gain is real rather than a small-sample fluke.",
+      "predicted": "arm_effect",
+      "selector": {
+        "type": "contrast",
+        "arms": {
+          "trained": {
+            "type": "point",
+            "node": "grpo60-hi"
+          },
+          "base": {
+            "type": "point",
+            "node": "base-hi"
+          }
+        }
+      },
+      "anchor": null,
+      "resolved_nodes": [
+        "grpo60-hi",
+        "base-hi"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "contrast_at_tip",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e2",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "arm_effect",
+        "evidence": {
+          "arm_values": {
+            "trained": 0.605,
+            "base": 0.45
+          },
+          "diff": 0.155,
+          "pooled_sigma": 0.049,
+          "threshold": 0.099
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T21:20:02+00:00"
+    },
+    "e8": {
+      "id": "e8",
+      "question": "With chain-of-thought ACTUALLY enabled (GRPO_COT=1, verified in train.log) and training fresh from the pretrained base, does CoT-prompted GRPO raise held-out MBPP pass@1 over base at n=200? NOTE: the prior cotXX chain never set GRPO_COT (0 CoT instructions in every train.log) - it is plain GRPO; cot60-hi (0.605) is the plain-dose control, base-hi=0.45.",
+      "hypothesis": "e7 confirmed plain GRPO gives +0.155 over base. The real CoT pipeline has never run. Prompting step-by-step reasoning before code, reinforced only when the final code is correct, should teach the fresh base to reason-then-code and lift greedy pass@1 above base-hi (0.45) by >2 sigma (>~0.07 at n=200). Risk: the 640-token budget shared by reasoning+code may truncate solutions and depress compile rate.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "cotreal30"
+      },
+      "anchor": "base-hi",
+      "resolved_nodes": [
+        "cotreal30"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e7",
+      "verdict": {
+        "result": "inconclusive",
+        "finding": "flat",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.45
+            ],
+            [
+              30,
+              0.5
+            ]
+          ],
+          "anchor": 0.45,
+          "best": 0.5,
+          "best_step": 30,
+          "delta_vs_anchor": 0.05,
+          "sigma": 0.035,
+          "threshold": 0.071,
+          "plateau_onset_step": 30
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T22:20:27+00:00"
+    },
+    "e9": {
+      "id": "e9",
+      "question": "At matched 60-step dose and n=200, does the real CoT pipeline (cotreal60: CoT train+eval) beat, match, or lose to the plain-GRPO control grpo60-hi (0.605)?",
+      "hypothesis": "On simple MBPP function-writing a 2B base already reaches 0.605 with plain direct-coding; CoT mainly adds reasoning tokens (benefit largest on harder reasoning) and shares the 640-tok budget with the code. Predict CoT ~= plain (no_arm_effect); a positive CoT effect would refute the null and show CoT helps even here, a negative one would indicate a truncation penalty.",
+      "predicted": "no_arm_effect",
+      "selector": {
+        "type": "contrast",
+        "arms": {
+          "cot": {
+            "type": "point",
+            "node": "cotreal60"
+          },
+          "plain": {
+            "type": "point",
+            "node": "grpo60-hi"
+          }
+        }
+      },
+      "anchor": null,
+      "resolved_nodes": [
+        "cotreal60",
+        "grpo60-hi"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "contrast_at_tip",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e8",
+      "verdict": {
+        "result": "inconclusive",
+        "finding": "no_arm_effect",
+        "evidence": {
+          "arm_values": {
+            "cot": 0.575,
+            "plain": 0.605
+          },
+          "diff": -0.03,
+          "pooled_sigma": 0.049,
+          "threshold": 0.098
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T22:39:20+00:00"
+    },
+    "e10": {
+      "id": "e10",
+      "question": "Does CoT-GRPO keep raising MBPP pass@1 as dose deepens to 90 steps, or plateau (as plain GRPO did at ~60)?",
+      "hypothesis": "Plain GRPO plateaued ~0.62 by 60 steps. If CoT has a higher ceiling its chain should keep climbing past 60 toward 90; matching plain's plateau would mean CoT and plain share the same dose-response ceiling on MBPP.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "cotreal90"
+      },
+      "anchor": "base-hi",
+      "resolved_nodes": [
+        "cotreal30",
+        "cotreal60",
+        "cotreal90"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e8",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "improved",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.45
+            ],
+            [
+              30,
+              0.5
+            ],
+            [
+              60,
+              0.575
+            ],
+            [
+              90,
+              0.615
+            ]
+          ],
+          "anchor": 0.45,
+          "best": 0.615,
+          "best_step": 90,
+          "delta_vs_anchor": 0.165,
+          "sigma": 0.034,
+          "threshold": 0.069,
+          "plateau_onset_step": 90
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-25T22:39:20+00:00"
+    },
+    "e11": {
+      "id": "e11",
+      "question": "Is CoT pass@1 limited by the 640-token budget shared between reasoning and code? Does doubling room to 1024 (cotreal30-t1024) beat the 640-tok CoT run (cotreal30) at matched 30-step dose, n=200?",
+      "hypothesis": "CoT reasoning consumes tokens before the code block; at 640 some solutions truncate (cold rollout compile dipped to ~0.75). More room should cut truncation and raise pass@1 (arm_effect). No gain would mean 640 was already sufficient.",
+      "predicted": "arm_effect",
+      "selector": {
+        "type": "contrast",
+        "arms": {
+          "wide": {
+            "type": "point",
+            "node": "cotreal30-t1024"
+          },
+          "narrow": {
+            "type": "point",
+            "node": "cotreal30"
+          }
+        }
+      },
+      "anchor": null,
+      "resolved_nodes": [
+        "cotreal30-t1024",
+        "cotreal30"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "contrast_at_tip",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e8",
+      "verdict": {
+        "result": "pending",
+        "finding": null,
+        "why": "arms not all complete",
+        "written_at": "2026-06-26T00:19:23+00:00"
+      },
+      "created_at": "2026-06-25T22:39:20+00:00"
+    },
+    "e12": {
+      "id": "e12",
+      "question": "Does CoT-GRPO keep raising held-out MBPP pass@1 from 90->120 cumulative steps, or has the chain plateaued? (e10 confirmed the climb to 0.615@90 but flagged a possible plateau onset; the 60->90 leg was only ~1 sigma.)",
+      "hypothesis": "If CoT has a higher ceiling than plain GRPO (which plateaued ~0.62 by 60 steps), the chain should keep climbing toward 120. Matching/regressing to ~0.615 would indicate the CoT line has reached its plateau.",
+      "predicted": "improved",
+      "selector": {
+        "type": "path",
+        "tip": "cotreal120"
+      },
+      "anchor": "base-hi",
+      "resolved_nodes": [
+        "cotreal30",
+        "cotreal60",
+        "cotreal90",
+        "cotreal120"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "trend_vs_anchor",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e10",
+      "verdict": {
+        "result": "confirmed",
+        "finding": "improved",
+        "evidence": {
+          "trajectory": [
+            [
+              0,
+              0.45
+            ],
+            [
+              30,
+              0.5
+            ],
+            [
+              60,
+              0.575
+            ],
+            [
+              90,
+              0.615
+            ],
+            [
+              120,
+              0.615
+            ]
+          ],
+          "anchor": 0.45,
+          "best": 0.615,
+          "best_step": 90,
+          "delta_vs_anchor": 0.165,
+          "sigma": 0.034,
+          "threshold": 0.069,
+          "plateau_onset_step": 90
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-26T08:52:25+00:00"
+    },
+    "e13": {
+      "id": "e13",
+      "question": "At matched 90-step dose and n=200, does CoT (cotreal90=0.615) beat, match, or lose to the plain-GRPO control grpo90-hi? (e9 found a tie at 60 steps: 0.575 vs 0.605.)",
+      "hypothesis": "If CoT has a real edge it should separate from plain GRPO as dose deepens; a tie at 90 would mean the cotreal gain over base is generic GRPO dose, not CoT-specific.",
+      "predicted": "no_arm_effect",
+      "selector": {
+        "type": "contrast",
+        "arms": {
+          "cot": {
+            "type": "point",
+            "node": "cotreal90"
+          },
+          "plain": {
+            "type": "point",
+            "node": "grpo90-hi"
+          }
+        }
+      },
+      "anchor": null,
+      "resolved_nodes": [
+        "cotreal90",
+        "grpo90-hi"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "contrast_at_tip",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e9",
+      "verdict": {
+        "result": "inconclusive",
+        "finding": "no_arm_effect",
+        "evidence": {
+          "arm_values": {
+            "cot": 0.615,
+            "plain": 0.625
+          },
+          "diff": -0.01,
+          "pooled_sigma": 0.049,
+          "threshold": 0.097
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-26T08:55:37+00:00"
+    },
+    "e14": {
+      "id": "e14",
+      "question": "At matched 120-step dose and n=200, does CoT (cotreal120) beat, match, or lose to the plain-GRPO control grpo120-hi? Tests whether either line has a higher ceiling at depth.",
+      "hypothesis": "Plain GRPO plateaued ~0.62 by 60 steps; if CoT keeps climbing to 120 it should pull ahead here, otherwise the two converge.",
+      "predicted": "no_arm_effect",
+      "selector": {
+        "type": "contrast",
+        "arms": {
+          "cot": {
+            "type": "point",
+            "node": "cotreal120"
+          },
+          "plain": {
+            "type": "point",
+            "node": "grpo120-hi"
+          }
+        }
+      },
+      "anchor": null,
+      "resolved_nodes": [
+        "cotreal120",
+        "grpo120-hi"
+      ],
+      "metric": {
+        "name": "eval_passrate",
+        "n": 200
+      },
+      "decision_rule": {
+        "type": "contrast_at_tip",
+        "k_sigma": 2
+      },
+      "power_check": {
+        "eval_n": 200,
+        "sigma_at_p0.5": 0.035,
+        "min_detectable_effect_2sigma": 0.071,
+        "note": "can't resolve effects < 0.071"
+      },
+      "motivated_by": "e9",
+      "verdict": {
+        "result": "inconclusive",
+        "finding": "no_arm_effect",
+        "evidence": {
+          "arm_values": {
+            "cot": 0.615,
+            "plain": 0.61
+          },
+          "diff": 0.005,
+          "pooled_sigma": 0.049,
+          "threshold": 0.097
+        },
+        "power": {
+          "eval_n": 200,
+          "sigma_at_p0.5": 0.035,
+          "min_detectable_effect_2sigma": 0.071,
+          "note": "can't resolve effects < 0.071"
+        },
+        "written_at": "2026-06-26T10:47:55+00:00"
+      },
+      "created_at": "2026-06-26T08:55:37+00:00"
+    }
+  }
+}
